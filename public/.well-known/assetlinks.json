@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.nordicworks.elorankings",
+      "sha256_cert_fingerprints": [
+        "8D:2B:85:35:99:9A:2B:A9:27:CE:74:E4:6C:D4:0C:49:87:36:7F:39:56:17:02:3F:07:80:02:E8:AE:8B:E0:32"
+      ]
+    }
+  }
+]

@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "mcp__claude_ai_Supabase__list_tables"
+      "mcp__claude_ai_Supabase__list_tables",
+      "Read(//c/Prosjekter/FlutterProsjekter/ELO/elo_rankings/**)",
+      "Bash(find . -name \"*.dart\" -type f -exec grep -l \"BorderRadius\\\\|EdgeInsets\\\\|const Color\\\\|fontSize.*:\" {} \\\\;)"
     ]
   }
 }
