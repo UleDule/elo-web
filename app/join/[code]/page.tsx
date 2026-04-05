@@ -13,13 +13,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sb = await getScoreboard(code)
   if (!sb) return { title: 'ELO Rankings' }
 
+  const title = `Join ${sb.name} on ELO Rankings`
+  const playerCount = sb.players.length
+  const description =
+    `You've been invited to ${sb.name} — ${playerCount} ` +
+    `player${playerCount !== 1 ? 's' : ''} competing in ` +
+    `${formatGameType(sb.game_type)}. Tap to join!`
+  const url = `https://elorankings.com/join/${code}`
+
   return {
-    title: `${sb.name} – ELO Rankings`,
-    description: `You've been invited to join ${sb.name}. Download ELO Rankings to compete!`,
+    metadataBase: new URL('https://elorankings.com'),
+    title,
+    description,
     openGraph: {
-      title: `Join ${sb.name} on ELO Rankings`,
-      description: `${sb.players.length} players competing in ${formatGameType(sb.game_type)}. Download the app to join!`,
+      type: 'website',
+      url,
+      title,
+      description,
       siteName: 'ELO Rankings',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
     },
   }
 }
