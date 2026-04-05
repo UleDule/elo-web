@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { getScoreboard, getProfile, formatGameType } from './lib'
+import JoinButton from './JoinButton'
 
 // --- metadata ---
 
@@ -47,7 +48,6 @@ export default async function JoinPage({ params }: Props) {
   if (!sb) notFound()
 
   const joinUrl = `https://elorankings.com/join/${code}`
-  const deepLink = `com.example.elo_rankings://join/${code}`
 
   const qrSvg = await QRCode.toString(joinUrl, {
     type: 'svg',
@@ -102,7 +102,7 @@ export default async function JoinPage({ params }: Props) {
 
         {/* Mobile CTA — shown above leaderboard on small screens */}
         <div className="lg:hidden">
-          <CtaCard name={sb.name} deepLink={deepLink} />
+          <MobileCta name={sb.name} code={code} />
         </div>
 
         {/* Leaderboard */}
@@ -171,7 +171,7 @@ export default async function JoinPage({ params }: Props) {
             </div>
 
             {/* Download card */}
-            <CtaCard name={sb.name} deepLink={deepLink} />
+            <DesktopDownloadCard name={sb.name} />
           </div>
         </div>
       </div>
@@ -226,7 +226,24 @@ function AvatarSquare({ name, url }: { name: string; url?: string | null }) {
   )
 }
 
-function CtaCard({ name, deepLink }: { name: string; deepLink: string }) {
+function MobileCta({ name, code }: { name: string; code: string }) {
+  return (
+    <div
+      className="rounded-2xl p-5"
+      style={{ background: '#1E1B2E', border: '1px solid rgba(184,90,255,0.12)' }}
+    >
+      <p className="text-[#9B95A8] text-sm text-center mb-4">
+        Join <strong className="text-white">{name}</strong>
+      </p>
+      <JoinButton code={code} />
+      <p className="text-[11px] text-[#6B6577] text-center mt-3">
+        Don&apos;t have the app? We&apos;ll take you to the store.
+      </p>
+    </div>
+  )
+}
+
+function DesktopDownloadCard({ name }: { name: string }) {
   return (
     <div
       className="rounded-2xl p-5"
@@ -253,13 +270,6 @@ function CtaCard({ name, deepLink }: { name: string; deepLink: string }) {
           Google Play
         </a>
       </div>
-      <a
-        href={deepLink}
-        className="block text-center mt-4 text-sm font-medium transition-colors"
-        style={{ color: '#B85AFF' }}
-      >
-        Already have the app? Open &rarr;
-      </a>
     </div>
   )
 }
