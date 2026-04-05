@@ -24,13 +24,12 @@ export default function JoinButton({ code }: { code: string }) {
     }
 
     if (isIOS) {
-      // iOS: Universal Links generally don't trigger when navigating
-      // to the same domain from JS, so after a brief delay we send
-      // the user to the App Store as a fallback.
-      window.location.href = `https://elorankings.com/join/${code}`
-      setTimeout(() => {
-        window.location.href = APP_STORE_URL
-      }, 1200)
+      // iOS Universal Links do NOT trigger when navigating to the same
+      // domain from JavaScript. If the user had the app, iOS would have
+      // already opened it at the previous step (QR scan, iMessage tap,
+      // etc.) — so if they're here in Safari on the join page, they
+      // almost certainly don't have the app installed. Send to App Store.
+      window.location.href = APP_STORE_URL
       return
     }
 
