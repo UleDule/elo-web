@@ -4,7 +4,7 @@ import QRCode from 'qrcode'
 // --- page ---
 
 export default async function Home() {
-  const qrSvg = await QRCode.toString('https://elorankings.com', {
+  const qrSvg = await QRCode.toString('https://elorankings.com/get', {
     type: 'svg',
     width: 160,
     margin: 0,
