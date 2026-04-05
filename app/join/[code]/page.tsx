@@ -150,8 +150,8 @@ export default async function JoinPage({ params }: Props) {
                     className="flex items-center px-4 py-2.5 rounded-xl gap-3 transition-colors hover:brightness-125"
                     style={{ background: '#252237' }}
                   >
-                    {/* Rank badge */}
-                    <RankBadge rank={i + 1} />
+                    {/* Rank number */}
+                    <RankNumber rank={i + 1} />
 
                     {/* Name */}
                     <span className="flex-1 text-white font-medium text-sm truncate">{name}</span>
@@ -203,21 +203,41 @@ export default async function JoinPage({ params }: Props) {
 
 // --- sub-components ---
 
-function RankBadge({ rank }: { rank: number }) {
-  let bg: string, color: string
+// Speiler mobilens _buildRankNumber (player_card.dart): stort, tungt tall
+// med metallisk gradient-fyll istedenfor bakgrunnspille. Unngår visuell
+// konkurranse med avatar-firkantene på høyre side av raden. Rank 4+ bruker
+// brand-lilla istedenfor mobilens blå for å stemme med web-temaet.
+function RankNumber({ rank }: { rank: number }) {
+  let gradient: string
   if (rank === 1) {
-    bg = 'rgba(250,204,21,0.2)'; color = '#FACC15'
+    // Gull
+    gradient =
+      'linear-gradient(to bottom, #FEF3C7 0%, #FFD700 33%, #B8860B 66%, #FFD700 100%)'
   } else if (rank === 2) {
-    bg = 'rgba(156,163,175,0.2)'; color = '#9CA3AF'
+    // Sølv
+    gradient =
+      'linear-gradient(to bottom, #FFFFFF 0%, #C0C0C0 33%, #808080 66%, #C0C0C0 100%)'
   } else if (rank === 3) {
-    bg = 'rgba(251,146,60,0.2)'; color = '#FB923C'
+    // Bronse
+    gradient =
+      'linear-gradient(to bottom, #FFC299 0%, #CD7F32 33%, #8B4513 66%, #CD7F32 100%)'
   } else {
-    bg = 'rgba(184,90,255,0.1)'; color = '#B85AFF'
+    // Brand-lilla
+    gradient =
+      'linear-gradient(to bottom, #E9D5FF 0%, #B85AFF 33%, #6D28D9 66%, #B85AFF 100%)'
   }
   return (
     <span
-      className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0"
-      style={{ background: bg, color }}
+      className="font-extrabold tabular-nums shrink-0 text-center leading-none"
+      style={{
+        fontSize: 28,
+        minWidth: '2.2ch',
+        background: gradient,
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        color: 'transparent',
+      }}
     >
       {rank}
     </span>
