@@ -45,9 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const LOGO_URL =
   'https://hpbtgieebhhowxwbxshd.supabase.co/storage/v1/object/public/ui/TrofeTransparens.png'
 
+// Avatar-paletten — delt kontrakt med mobil-appen.
+// Mobil-kilde: elo_rankings/lib/core/ui_components.dart (_avatarColors + _pickAvatarColor).
+// Hvis du endrer denne listen eller rekkefølgen: oppdater mobil-filen ELLER brukere
+// vil få forskjellig farge på mobil og web. Hash-funksjonen må også matche eksakt.
+// 4D-suffiks = ~30% alpha (8-siffer hex). Lar kort-bakgrunnen skinne gjennom
+// så fargene dempes og merges inn i det lilla interface-temaet. Samme alpha
+// speiles i mobil-appen (Color(0x4DRRGGBB)).
 const ACCENT_COLORS = [
-  '#B85AFF', '#60A5FA', '#4ADE80', '#FB923C',
-  '#F87171', '#FACC15', '#22D3EE', '#A78BFA',
+  '#B85AFF4D', '#6366F14D', '#14B8A64D', '#F59E0B4D',
+  '#EC48994D', '#EAB3084D', '#06B6D44D', '#A78BFA4D',
 ]
 
 function pickColor(name: string) {
