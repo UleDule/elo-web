@@ -32,37 +32,27 @@ export default async function Image({ params }: Props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#181622',
+          backgroundColor: '#1A0B33',
           backgroundImage:
-            'radial-gradient(ellipse at center, #2D1B69 0%, #181622 75%)',
+            'radial-gradient(circle at 30% 50%, #4A1F8C 0%, #1A0B33 60%)',
           color: 'white',
           fontFamily: 'sans-serif',
           padding: '60px 80px',
         }}
       >
-        {/* Left: trophy logo */}
-        <div
+        {/* Left: trophy logo (no drop-shadow filter — causes visible box
+            artifacts when messengers crop/compress the image) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoSrc}
+          alt="ELO Rankings"
+          width={420}
+          height={420}
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 440,
-            height: 440,
+            objectFit: 'contain',
             flexShrink: 0,
           }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logoSrc}
-            alt="ELO Rankings"
-            width={440}
-            height={440}
-            style={{
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 0 60px rgba(184,90,255,0.8))',
-            }}
-          />
-        </div>
+        />
 
         {/* Right: text column */}
         <div
@@ -70,19 +60,19 @@ export default async function Image({ params }: Props) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            marginLeft: 50,
+            marginLeft: 60,
             flex: 1,
             minWidth: 0,
           }}
         >
           <div
             style={{
-              fontSize: 28,
-              fontWeight: 600,
-              color: '#D4AAFF',
-              letterSpacing: 3,
+              fontSize: 44,
+              fontWeight: 700,
+              color: '#E5C8FF',
+              letterSpacing: 4,
               textTransform: 'uppercase',
-              marginBottom: 18,
+              marginBottom: 24,
               display: 'flex',
             }}
           >
@@ -90,13 +80,12 @@ export default async function Image({ params }: Props) {
           </div>
           <div
             style={{
-              fontSize: 88,
+              fontSize: 100,
               fontWeight: 900,
               lineHeight: 1.0,
-              marginBottom: 24,
+              marginBottom: 30,
               color: '#ffffff',
               display: 'flex',
-              textShadow: '0 0 40px rgba(184,90,255,0.6)',
             }}
           >
             {name}
@@ -104,9 +93,10 @@ export default async function Image({ params }: Props) {
           {sb && (
             <div
               style={{
-                fontSize: 32,
-                color: '#9B95A8',
-                marginBottom: 28,
+                fontSize: 46,
+                fontWeight: 500,
+                color: '#C9BFDB',
+                marginBottom: 38,
                 display: 'flex',
               }}
             >
@@ -115,15 +105,14 @@ export default async function Image({ params }: Props) {
           )}
           <div
             style={{
-              padding: '16px 36px',
-              borderRadius: 18,
+              padding: '22px 48px',
+              borderRadius: 22,
               backgroundColor: '#B85AFF',
               color: '#ffffff',
-              fontSize: 32,
+              fontSize: 44,
               fontWeight: 800,
               display: 'flex',
               alignSelf: 'flex-start',
-              boxShadow: '0 0 40px rgba(184,90,255,0.5)',
             }}
           >
             ELO Rankings
