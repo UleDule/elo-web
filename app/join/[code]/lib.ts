@@ -13,6 +13,7 @@ export type PlayerRow = {
   elo: number
   total_games: number
   guest_name: string | null
+  user_id: string | null
   // Supabase returns object for many-to-one FK, or null for guest players
   profiles: ProfileData | ProfileData[] | null
 }
@@ -54,11 +55,27 @@ export const getScoreboard = cache(
     const { data: players } = await supabase
       .from('list_players')
       .select(
-        'id, elo, total_games, guest_name, profiles(display_name, avatar_url)'
+        'id, elo, total_games, guest_name, user_id, profiles(display_name, avatar_url)'
       )
       .eq('list_id', list.id)
       .order('elo', { ascending: false })
 
-    return { ...list, players: (players ?? []) as PlayerRow[] }
+    // Filter out players who have left the scoreboard. Their list_players row
+    // is kept so that match history still resolves names, but they should not
+    // appear in the public leaderboard / OG image / poster on the web.
+    const { data: members } = await supabase
+      .from('list_members')
+      .select('user_id')
+      .eq('list_id', list.id)
+
+    const activeMemberIds = new Set(
+      (members ?? []).map((m) => m.user_id as string)
+    )
+
+    const visiblePlayers = ((players ?? []) as PlayerRow[]).filter(
+      (p) => p.user_id === null || activeMemberIds.has(p.user_id)
+    )
+
+    return { ...list, players: visiblePlayers }
   }
 )
