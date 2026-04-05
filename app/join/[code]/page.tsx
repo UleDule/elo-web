@@ -52,9 +52,13 @@ const LOGO_URL =
 // 4D-suffiks = ~30% alpha (8-siffer hex). Lar kort-bakgrunnen skinne gjennom
 // så fargene dempes og merges inn i det lilla interface-temaet. Samme alpha
 // speiles i mobil-appen (Color(0x4DRRGGBB)).
+//
+// 8 farger jevnt fordelt rundt fargehjulet (~45° mellom hver) så hver slot
+// er tydelig skillbar selv etter at kort-bakgrunnen skinner gjennom.
+// Slot 0 er brand-lilla; resten er Tailwind-500 for konsistent metning.
 const ACCENT_COLORS = [
-  '#B85AFF4D', '#6366F14D', '#14B8A64D', '#F59E0B4D',
-  '#EC48994D', '#EAB3084D', '#06B6D44D', '#A78BFA4D',
+  '#B85AFF4D', '#EC48994D', '#EF44444D', '#F973164D',
+  '#EAB3084D', '#22C55E4D', '#06B6D44D', '#3B82F64D',
 ]
 
 function pickColor(name: string) {
