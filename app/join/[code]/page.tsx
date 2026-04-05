@@ -129,7 +129,7 @@ export default async function JoinPage({ params }: Props) {
           >
             {/* Rows */}
             <div className="p-2 flex flex-col gap-1.5">
-              {sb.players.slice(0, 25).map((player, i) => {
+              {sb.players.map((player, i) => {
                 const profile = getProfile(player)
                 const name = profile?.display_name ?? player.guest_name ?? 'Guest'
                 const avatar = profile?.avatar_url
@@ -153,11 +153,6 @@ export default async function JoinPage({ params }: Props) {
                   </div>
                 )
               })}
-              {sb.players.length > 25 && (
-                <div className="py-2 text-center text-xs text-[#9B95A8]">
-                  + {sb.players.length - 25} more players
-                </div>
-              )}
             </div>
           </div>
         </div>
