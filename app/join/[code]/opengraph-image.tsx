@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { getScoreboard, formatGameType } from './lib'
 
-export const runtime = 'nodejs'
 export const contentType = 'image/png'
 export const size = { width: 1200, height: 630 }
 export const alt = 'Join on ELO Rankings'
@@ -25,8 +24,9 @@ export default async function Image({ params }: Props) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background:
-            'linear-gradient(135deg, #181622 0%, #2D1B69 50%, #181622 100%)',
+          backgroundColor: '#181622',
+          backgroundImage:
+            'radial-gradient(ellipse at center, #2D1B69 0%, #181622 70%)',
           color: 'white',
           fontFamily: 'sans-serif',
           padding: '80px',
@@ -35,26 +35,27 @@ export default async function Image({ params }: Props) {
       >
         <div
           style={{
-            fontSize: 36,
+            fontSize: 34,
             fontWeight: 600,
-            color: '#B85AFF',
-            letterSpacing: 2,
+            color: '#D4AAFF',
+            letterSpacing: 4,
             textTransform: 'uppercase',
             marginBottom: 30,
+            display: 'flex',
           }}
         >
-          You&apos;re invited
+          You're invited to join
         </div>
         <div
           style={{
-            fontSize: 110,
+            fontSize: 108,
             fontWeight: 900,
             lineHeight: 1.05,
-            marginBottom: 40,
-            maxWidth: '90%',
-            background: 'linear-gradient(135deg, #ffffff 0%, #B85AFF 100%)',
-            backgroundClip: 'text',
-            color: 'transparent',
+            marginBottom: 35,
+            maxWidth: '95%',
+            color: '#ffffff',
+            display: 'flex',
+            textShadow: '0 0 40px rgba(184,90,255,0.6)',
           }}
         >
           {name}
@@ -64,7 +65,8 @@ export default async function Image({ params }: Props) {
             style={{
               fontSize: 38,
               color: '#9B95A8',
-              marginBottom: 50,
+              marginBottom: 60,
+              display: 'flex',
             }}
           >
             {gameType} · {playerCount} player{playerCount !== 1 ? 's' : ''}
@@ -72,15 +74,14 @@ export default async function Image({ params }: Props) {
         )}
         <div
           style={{
+            padding: '22px 50px',
+            borderRadius: 24,
+            backgroundColor: '#B85AFF',
+            color: '#ffffff',
+            fontSize: 42,
+            fontWeight: 800,
             display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-            padding: '20px 40px',
-            borderRadius: 20,
-            background: 'rgba(184,90,255,0.15)',
-            border: '2px solid rgba(184,90,255,0.5)',
-            fontSize: 36,
-            fontWeight: 700,
+            boxShadow: '0 0 40px rgba(184,90,255,0.5)',
           }}
         >
           ELO Rankings
