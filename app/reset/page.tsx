@@ -1,12 +1,7 @@
 "use client";
 
-import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { useEffect, useRef, useState } from "react";
 
 type Stage = "loading" | "form" | "success" | "error";
 
@@ -16,9 +11,21 @@ export default function ResetPasswordPage() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const supabaseRef = useRef<SupabaseClient | null>(null);
+
+  function getSupabase() {
+    if (!supabaseRef.current) {
+      supabaseRef.current = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+    }
+    return supabaseRef.current;
+  }
 
   useEffect(() => {
     async function handleAuth() {
+      const supabase = getSupabase();
       // PKCE flow: Supabase redirects with ?code=...
       const url = new URL(window.location.href);
       const code = url.searchParams.get("code");
@@ -71,7 +78,7 @@ export default function ResetPasswordPage() {
     }
 
     setSaving(true);
-    const { error } = await supabase.auth.updateUser({ password });
+    const { error } = await getSupabase().auth.updateUser({ password });
     setSaving(false);
 
     if (error) {
