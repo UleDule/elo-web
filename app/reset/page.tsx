@@ -18,29 +18,43 @@ export default function ResetPasswordPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    // Supabase redirects with tokens in the URL hash fragment:
-    // #access_token=...&refresh_token=...&type=recovery
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const accessToken = params.get("access_token");
-    const refreshToken = params.get("refresh_token");
-    const type = params.get("type");
+    async function handleAuth() {
+      // PKCE flow: Supabase redirects with ?code=...
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
 
-    if (type === "recovery" && accessToken && refreshToken) {
-      supabase.auth
-        .setSession({ access_token: accessToken, refresh_token: refreshToken })
-        .then(({ error }) => {
-          if (error) {
-            setError(error.message);
-            setStage("error");
-          } else {
-            setStage("form");
-          }
+      // Implicit flow fallback: #access_token=...&type=recovery
+      const hash = window.location.hash.substring(1);
+      const hashParams = new URLSearchParams(hash);
+      const accessToken = hashParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token");
+
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error) {
+          setError(error.message);
+          setStage("error");
+        } else {
+          setStage("form");
+        }
+      } else if (accessToken && refreshToken) {
+        const { error } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
         });
-    } else {
-      setError("Invalid or expired reset link.");
-      setStage("error");
+        if (error) {
+          setError(error.message);
+          setStage("error");
+        } else {
+          setStage("form");
+        }
+      } else {
+        setError("Invalid or expired reset link.");
+        setStage("error");
+      }
     }
+
+    handleAuth();
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
