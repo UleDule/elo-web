@@ -16,8 +16,8 @@ export default function ResetPasswordPage() {
   function getSupabase() {
     if (!supabaseRef.current) {
       supabaseRef.current = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        "https://hpbtgieebhhowxwbxshd.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYnRnaWVlYmhob3d4d2J4c2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAyNzA3ODgsImV4cCI6MjA2NTg0Njc4OH0.fOwUsmM5r5YBVsEzXxyQtKAXU5p8Hn6t0n0w83ZG4fY"
       );
     }
     return supabaseRef.current;
