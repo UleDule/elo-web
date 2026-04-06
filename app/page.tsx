@@ -115,7 +115,7 @@ export default async function Home() {
             <div className="flex sm:hidden gap-3">
               <a
                 href="https://apps.apple.com/app/elo-rankings/id6749603706"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
                 style={{
                   background: 'rgba(184,90,255,0.15)',
                   border: '1px solid rgba(184,90,255,0.3)',
@@ -125,7 +125,7 @@ export default async function Home() {
               </a>
               <a
                 href="https://play.google.com/store/apps/details?id=com.nordicworks.elorankings"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
                 style={{
                   background: 'rgba(184,90,255,0.15)',
                   border: '1px solid rgba(184,90,255,0.3)',
