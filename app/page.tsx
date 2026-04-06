@@ -112,18 +112,24 @@ export default async function Home() {
             </div>
 
             {/* Mobile layout */}
-            <div className="flex sm:hidden gap-4">
+            <div className="flex sm:hidden gap-3">
               <a
                 href="https://apps.apple.com/app/elo-rankings/id6749603706"
-                className="flex items-center justify-center gap-2.5 rounded-xl py-3.5 px-8 text-base font-semibold text-white transition hover:brightness-125"
-                style={{ background: '#B85AFF' }}
+                className="flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
+                style={{
+                  background: 'rgba(184,90,255,0.15)',
+                  border: '1px solid rgba(184,90,255,0.3)',
+                }}
               >
                 <AppleIcon /> App Store
               </a>
               <a
                 href="https://play.google.com/store/apps/details?id=com.nordicworks.elorankings"
-                className="flex items-center justify-center gap-2.5 rounded-xl py-3.5 px-8 text-base font-semibold text-white transition hover:brightness-125"
-                style={{ background: '#B85AFF' }}
+                className="flex items-center justify-center gap-2 rounded-xl py-3 px-5 text-sm font-semibold text-white whitespace-nowrap transition hover:brightness-125"
+                style={{
+                  background: 'rgba(184,90,255,0.15)',
+                  border: '1px solid rgba(184,90,255,0.3)',
+                }}
               >
                 <PlayIcon /> Google Play
               </a>
