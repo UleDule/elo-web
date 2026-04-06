@@ -25,38 +25,42 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     async function handleAuth() {
-      const supabase = getSupabase();
-      // PKCE flow: Supabase redirects with ?code=...
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get("code");
+      try {
+        const supabase = getSupabase();
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get("code");
 
-      // Implicit flow fallback: #access_token=...&type=recovery
-      const hash = window.location.hash.substring(1);
-      const hashParams = new URLSearchParams(hash);
-      const accessToken = hashParams.get("access_token");
-      const refreshToken = hashParams.get("refresh_token");
+        // Implicit flow fallback: #access_token=...&type=recovery
+        const hash = window.location.hash.substring(1);
+        const hashParams = new URLSearchParams(hash);
+        const accessToken = hashParams.get("access_token");
+        const refreshToken = hashParams.get("refresh_token");
 
-      if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) {
-          setError(error.message);
-          setStage("error");
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) {
+            setError(error.message);
+            setStage("error");
+          } else {
+            setStage("form");
+          }
+        } else if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          if (error) {
+            setError(error.message);
+            setStage("error");
+          } else {
+            setStage("form");
+          }
         } else {
-          setStage("form");
-        }
-      } else if (accessToken && refreshToken) {
-        const { error } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken,
-        });
-        if (error) {
-          setError(error.message);
+          setError("Invalid or expired reset link.");
           setStage("error");
-        } else {
-          setStage("form");
         }
-      } else {
-        setError("Invalid or expired reset link.");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unexpected error occurred.");
         setStage("error");
       }
     }
