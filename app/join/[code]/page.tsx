@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { getScoreboard, getProfile, formatGameType } from './lib'
 import JoinButton from './JoinButton'
-import AppRedirect from './AppRedirect'
 
 // --- metadata ---
 
@@ -86,7 +85,6 @@ export default async function JoinPage({ params }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <AppRedirect code={code} />
 
       {/* Hero */}
       <div
