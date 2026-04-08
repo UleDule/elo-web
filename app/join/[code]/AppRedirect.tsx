@@ -11,8 +11,8 @@ import { useEffect } from 'react'
  */
 export default function AppRedirect({ code }: { code: string }) {
   useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    if (isMobile) {
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+    if (isIOS) {
       window.location.href = `elorankings://join/${code}`
     }
   }, [code])
