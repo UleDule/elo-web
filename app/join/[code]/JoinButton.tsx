@@ -12,8 +12,6 @@ export default function JoinButton({ code }: { code: string }) {
     const isIOS = /iPhone|iPad|iPod/i.test(ua)
 
     if (isAndroid) {
-      // Android Intent URL: tries to open the app, falls back to Play Store
-      // if the app isn't installed (handled by browser_fallback_url).
       const fallback = encodeURIComponent(PLAY_STORE_URL)
       const intentUrl =
         `intent://elorankings.com/join/${code}` +
@@ -24,12 +22,8 @@ export default function JoinButton({ code }: { code: string }) {
     }
 
     if (isIOS) {
-      // Try custom URL scheme to open the app directly.
-      // If the app isn't installed, nothing visible happens and the
-      // timeout fires, sending the user to the App Store.
       window.location.href = `elorankings://join/${code}`
       setTimeout(() => {
-        // If we're still here after 1.5s, the app didn't open — go to store.
         if (!document.hidden) {
           window.location.href = APP_STORE_URL
         }
@@ -37,7 +31,6 @@ export default function JoinButton({ code }: { code: string }) {
       return
     }
 
-    // Desktop / unknown: just send to the OS-aware redirect route.
     window.location.href = '/get'
   }
 
