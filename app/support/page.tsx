@@ -165,7 +165,7 @@ export default function SupportPage() {
             Read about how we handle your data.
           </p>
           <a
-            href="https://uledule.github.io/elo-rankings-support/privacy"
+            href="/privacy"
             className="inline-flex items-center gap-2 rounded-xl py-3 px-6 text-sm font-semibold text-white transition hover:brightness-125"
             style={{
               background: 'rgba(184,90,255,0.15)',
