@@ -13,11 +13,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const claim = await getClaim(code)
   if (!claim) return { title: 'ELO Rankings' }
 
-  const title = `Take over ${claim.guest_name} on ELO Rankings`
+  const title = `Join ${claim.list_name} as ${claim.guest_name}`
   const description =
-    `You've been invited to take over ${claim.guest_name}'s account in ` +
-    `${claim.list_name} — ${claim.guest_elo} ELO, ` +
-    `${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} preserved.`
+    `You've been invited to ${claim.list_name} — claim ${claim.guest_name}'s ` +
+    `spot with ${claim.guest_elo} ELO and ` +
+    `${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history.`
   const url = `https://elorankings.com/claim/${code}`
 
   return {
@@ -117,14 +117,15 @@ export default async function ClaimPage({ params }: Props) {
             border: '1px solid rgba(184,90,255,0.3)',
           }}
         >
-          You&apos;re invited to take over an account
+          You&apos;re invited
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
-          {claim.guest_name}
+          {claim.list_name}
         </h1>
         <p className="text-[#9B95A8] text-sm">
-          in <span className="text-white font-semibold">{claim.list_name}</span>{' '}
+          Join as{' '}
+          <span className="text-white font-semibold">{claim.guest_name}</span>{' '}
           &middot; {formatGameType(claim.game_type)}
         </p>
       </div>
@@ -160,11 +161,14 @@ export default async function ClaimPage({ params }: Props) {
         >
           <AvatarSquare name={claim.guest_name} url={null} />
           <p className="text-[#C9BFDB] text-sm mt-4 mb-1">
-            Take over <strong className="text-white">{claim.guest_name}</strong>
+            Claim{' '}
+            <strong className="text-white">{claim.guest_name}</strong>&apos;s
+            spot
           </p>
           <p className="text-[12px] text-[#9B95A8] leading-relaxed max-w-md mx-auto">
-            ELO and match history are preserved. Your name, avatar and country
-            replace the guest profile when you take it over.
+            You&apos;ll join the scoreboard as this player. ELO and match
+            history are preserved — your name, avatar and country simply replace
+            the guest profile.
           </p>
         </div>
 
@@ -186,7 +190,7 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-white font-semibold text-sm mb-5">
-              Scan to take over
+              Scan to join
             </p>
             <div
               className="rounded-xl p-5"
@@ -206,7 +210,8 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-[#9B95A8] text-sm text-center mb-4">
-              Download the app to take over{' '}
+              Download the app to join{' '}
+              <strong className="text-white">{claim.list_name}</strong> as{' '}
               <strong className="text-white">{claim.guest_name}</strong>
             </p>
             <div className="flex flex-col gap-3">

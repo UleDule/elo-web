@@ -73,11 +73,11 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            Take over an account
+            You&apos;re invited
           </div>
           <div
             style={{
-              fontSize: 96,
+              fontSize: 88,
               fontWeight: 900,
               lineHeight: 1.0,
               marginBottom: 16,
@@ -85,7 +85,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            {guestName}
+            {listName}
           </div>
           <div
             style={{
@@ -96,7 +96,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            in {listName}
+            Join as {guestName}
             {gameType ? ` · ${gameType}` : ''}
           </div>
 

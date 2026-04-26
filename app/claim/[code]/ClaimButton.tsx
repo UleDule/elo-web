@@ -49,7 +49,7 @@ export default function ClaimButton({
         boxShadow: '0 0 24px rgba(184,90,255,0.45)',
       }}
     >
-      Take over {guestName}
+      Join as {guestName}
     </button>
   )
 }
