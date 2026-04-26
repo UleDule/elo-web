@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "LP59WNG6HY.com.nordicworks.elorankings",
-        "paths": ["/join/*"]
+        "paths": ["/join/*", "/claim/*"]
       }
     ]
   }
