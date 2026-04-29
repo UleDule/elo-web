@@ -13,11 +13,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const claim = await getClaim(code)
   if (!claim) return { title: 'ELO Rankings' }
 
-  const title = `Join ${claim.list_name} as ${claim.guest_name}`
+  const title = `Take ${claim.guest_name}'s spot on ELO Rankings`
   const description =
-    `You've been invited to ${claim.list_name} — claim ${claim.guest_name}'s ` +
-    `spot with ${claim.guest_elo} ELO and ` +
-    `${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history.`
+    `You've been invited to take ${claim.guest_name}'s spot in ${claim.list_name}. ` +
+    `${claim.guest_elo} ELO and ` +
+    `${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history are preserved.`
   const url = `https://elorankings.com/claim/${code}`
 
   return {
@@ -124,7 +124,7 @@ export default async function ClaimPage({ params }: Props) {
           {claim.list_name}
         </h1>
         <p className="text-[#9B95A8] text-sm">
-          Join as{' '}
+          The spot as{' '}
           <span className="text-white font-semibold">{claim.guest_name}</span>{' '}
           &middot; {formatGameType(claim.game_type)}
         </p>
@@ -161,20 +161,19 @@ export default async function ClaimPage({ params }: Props) {
         >
           <AvatarSquare name={claim.guest_name} url={null} />
           <p className="text-[#C9BFDB] text-sm mt-4 mb-1">
-            Claim{' '}
+            Take{' '}
             <strong className="text-white">{claim.guest_name}</strong>&apos;s
             spot
           </p>
           <p className="text-[12px] text-[#9B95A8] leading-relaxed max-w-md mx-auto">
-            You&apos;ll join the scoreboard as this player. ELO and match
-            history are preserved — your name, avatar and country simply replace
-            the guest profile.
+            You&apos;ll take the spot as this player. ELO and match history are
+            preserved. Your name, avatar and country replace the guest profile.
           </p>
         </div>
 
         {/* Mobile CTA */}
         <div className="lg:hidden">
-          <ClaimButton code={code} guestName={claim.guest_name} />
+          <ClaimButton code={code} />
           <p className="text-[11px] text-[#6B6577] text-center mt-3">
             Don&apos;t have the app? We&apos;ll take you to the store.
           </p>
@@ -190,7 +189,7 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-white font-semibold text-sm mb-5">
-              Scan to join
+              Scan to take the spot
             </p>
             <div
               className="rounded-xl p-5"
@@ -210,9 +209,10 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-[#9B95A8] text-sm text-center mb-4">
-              Download the app to join{' '}
-              <strong className="text-white">{claim.list_name}</strong> as{' '}
-              <strong className="text-white">{claim.guest_name}</strong>
+              Download the app to take{' '}
+              <strong className="text-white">{claim.guest_name}</strong>&apos;s
+              spot in{' '}
+              <strong className="text-white">{claim.list_name}</strong>
             </p>
             <div className="flex flex-col gap-3">
               <a

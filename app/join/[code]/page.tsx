@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `Join ${sb.name} on ELO Rankings`
   const playerCount = sb.players.length
   const description =
-    `You've been invited to ${sb.name} — ${playerCount} ` +
+    `You've been invited to ${sb.name}. ${playerCount} ` +
     `player${playerCount !== 1 ? 's' : ''} competing in ` +
     `${formatGameType(sb.game_type)}. Tap to join!`
   const url = `https://elorankings.com/join/${code}`

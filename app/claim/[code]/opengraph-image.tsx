@@ -96,7 +96,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            Join as {guestName}
+            The spot as {guestName}
             {gameType ? ` · ${gameType}` : ''}
           </div>
 

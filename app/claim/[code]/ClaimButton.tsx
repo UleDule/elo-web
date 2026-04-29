@@ -5,13 +5,7 @@ const APP_STORE_URL =
 const PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.nordicworks.elorankings'
 
-export default function ClaimButton({
-  code,
-  guestName,
-}: {
-  code: string
-  guestName: string
-}) {
+export default function ClaimButton({ code }: { code: string }) {
   const handleClick = () => {
     const ua = navigator.userAgent
     const isAndroid = /Android/i.test(ua)
@@ -49,7 +43,7 @@ export default function ClaimButton({
         boxShadow: '0 0 24px rgba(184,90,255,0.45)',
       }}
     >
-      Join as {guestName}
+      Take the spot
     </button>
   )
 }
