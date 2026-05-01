@@ -13,11 +13,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const claim = await getClaim(code)
   if (!claim) return { title: 'ELO Rankings' }
 
-  const title = `Take ${claim.guest_name}'s spot on ELO Rankings`
+  const title = `Take ${claim.guest_name}'s spot in ${claim.list_name}`
   const description =
-    `You've been invited to take ${claim.guest_name}'s spot in ${claim.list_name}. ` +
-    `${claim.guest_elo} ELO and ` +
-    `${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history are preserved.`
+    `${claim.guest_elo} ELO · ${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history`
   const url = `https://elorankings.com/claim/${code}`
 
   return {
