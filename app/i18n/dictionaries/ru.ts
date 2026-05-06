@@ -34,6 +34,7 @@ export const ru: Dictionary = {
       )}`,
     downloadAppToJoin: 'Скачай приложение, чтобы присоединиться к',
     joinButton: 'Открыть в приложении',
+    posterCta: 'Скачай ELO Rankings и присоединяйся к этой таблице',
   },
 
   claim: {
@@ -53,4 +54,23 @@ export const ru: Dictionary = {
   },
 
   language: 'Язык',
+
+  sports: {
+    table_tennis: 'Настольный теннис',
+    chess: 'Шахматы',
+    billiards: 'Бильярд',
+    tennis: 'Теннис',
+    padel: 'Падел',
+    darts: 'Дартс',
+    foosball: 'Настольный футбол',
+    fifa: 'FIFA',
+    smash_bros: 'Smash Bros',
+    badminton: 'Бадминтон',
+    pool: 'Пул',
+    arm_wrestling: 'Армрестлинг',
+    go: 'Го',
+    backgammon: 'Нарды',
+    petanque: 'Петанк',
+    other: 'Другое',
+  },
 }

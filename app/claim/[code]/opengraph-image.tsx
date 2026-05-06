@@ -30,7 +30,7 @@ export default async function Image({ params, searchParams }: Props) {
   const listName = claim?.list_name ?? 'ELO Rankings'
   const elo = claim?.guest_elo ?? 1000
   const games = claim?.guest_total_games ?? 0
-  const gameType = claim ? formatGameType(claim.game_type) : ''
+  const gameType = claim ? formatGameType(claim.game_type, t.sports) : ''
 
   const logoBuffer = await readFile(
     join(process.cwd(), 'public', 'logo', 'TrofeTransparens.png'),

@@ -28,7 +28,7 @@ export default async function Image({ params, searchParams }: Props) {
   const sb = await getScoreboard(code)
   const name = sb?.name ?? 'ELO Rankings'
   const playerCount = sb?.players.length ?? 0
-  const gameType = sb ? formatGameType(sb.game_type) : ''
+  const gameType = sb ? formatGameType(sb.game_type, t.sports) : ''
 
   // Read the trophy logo from the public folder and inline it as base64
   // so Satori can render it reliably (no network fetch at render time).

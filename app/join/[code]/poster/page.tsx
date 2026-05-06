@@ -3,10 +3,14 @@ import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { getScoreboard, formatGameType } from '../lib'
 import { PrintButton } from './print-button'
+import { getDictionary } from '@/app/i18n'
 
 // --- metadata ---
 
-type Props = { params: Promise<{ code: string }> }
+type Props = {
+  params: Promise<{ code: string }>
+  searchParams: Promise<{ lang?: string }>
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
@@ -19,12 +23,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // --- page ---
 
-export default async function PosterPage({ params }: Props) {
+export default async function PosterPage({ params, searchParams }: Props) {
   const { code } = await params
+  const { lang: searchLang } = await searchParams
   const sb = await getScoreboard(code)
   if (!sb) notFound()
 
-  const joinUrl = `https://elorankings.com/join/${code}`
+  const { lang, t } = await getDictionary(searchLang)
+  // Bruker samme språk for QR-targetet, så mottakeren lander på poster-eierens
+  // språk når de scanner.
+  const joinUrl = `https://elorankings.com/join/${code}?lang=${lang}`
 
   const qrSvg = await QRCode.toString(joinUrl, {
     type: 'svg',
@@ -57,7 +65,7 @@ export default async function PosterPage({ params }: Props) {
           {sb.name}
         </h1>
         <p className="text-lg text-gray-400 mb-14">
-          {formatGameType(sb.game_type)}
+          {formatGameType(sb.game_type, t.sports)}
         </p>
 
         {/* QR code — fixed size, centered */}
@@ -70,10 +78,10 @@ export default async function PosterPage({ params }: Props) {
 
         {/* Call to action */}
         <p className="text-2xl font-bold mb-1">
-          Scan to join
+          {t.scanToJoin}
         </p>
         <p className="text-base text-gray-400">
-          Download ELO Rankings and join this leaderboard
+          {t.join.posterCta}
         </p>
       </div>
     </div>

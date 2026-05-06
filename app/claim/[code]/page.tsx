@@ -144,7 +144,7 @@ export default async function ClaimPage({ params, searchParams }: Props) {
         <p className="text-[#9B95A8] text-sm">
           {t.claim.spotAs}{' '}
           <span className="text-white font-semibold">{claim.guest_name}</span>{' '}
-          &middot; {formatGameType(claim.game_type)}
+          &middot; {formatGameType(claim.game_type, t.sports)}
         </p>
       </div>
 

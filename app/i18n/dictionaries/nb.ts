@@ -17,6 +17,7 @@ export const nb: Dictionary = {
       `${gameType} · ${playerCount} ${playerCount === 1 ? 'spiller' : 'spillere'}`,
     downloadAppToJoin: 'Last ned appen for å bli med i',
     joinButton: 'Åpne i app',
+    posterCta: 'Last ned ELO Rankings og bli med i scoreboardet',
   },
 
   claim: {
@@ -34,4 +35,23 @@ export const nb: Dictionary = {
   },
 
   language: 'Språk',
+
+  sports: {
+    table_tennis: 'Bordtennis',
+    chess: 'Sjakk',
+    billiards: 'Biljard',
+    tennis: 'Tennis',
+    padel: 'Padel',
+    darts: 'Dart',
+    foosball: 'Foosball',
+    fifa: 'FIFA',
+    smash_bros: 'Smash Bros',
+    badminton: 'Badminton',
+    pool: 'Pool',
+    arm_wrestling: 'Håndbak',
+    go: 'Go',
+    backgammon: 'Backgammon',
+    petanque: 'Pétanque',
+    other: 'Annet',
+  },
 }

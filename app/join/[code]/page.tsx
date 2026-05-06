@@ -26,7 +26,7 @@ export async function generateMetadata({
   const { lang, t } = await getDictionary(searchLang)
   const title = t.join.joinHeadline(sb.name)
   const playerCount = sb.players.length
-  const description = t.join.metaLine(formatGameType(sb.game_type), playerCount)
+  const description = t.join.metaLine(formatGameType(sb.game_type, t.sports), playerCount)
   const url = `https://elorankings.com/join/${code}?lang=${lang}`
   // OG-bildet leser ?lang=xx fra URL-en for å rendre på riktig språk.
   // Uten denne eksplisitte URL-en bruker Next.js auto-generert path uten
@@ -139,7 +139,7 @@ export default async function JoinPage({ params, searchParams }: Props) {
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">{sb.name}</h1>
         <p className="text-[#9B95A8] text-sm">
-          {t.join.metaLine(formatGameType(sb.game_type), sb.players.length)}
+          {t.join.metaLine(formatGameType(sb.game_type, t.sports), sb.players.length)}
         </p>
       </div>
 

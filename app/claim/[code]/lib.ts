@@ -13,7 +13,17 @@ export type ClaimContext = {
   guest_total_games: number
 }
 
-export function formatGameType(type: string): string {
+// Type for the sports dictionary section. Indexed by the same keys as
+// Sports.xxxKey in mobile (lib/constants/sports.dart).
+type SportsDict = {
+  [key: string]: string
+}
+
+export function formatGameType(type: string, sports?: SportsDict): string {
+  // First: try to look up by stable DB key (table_tennis, chess, padel...).
+  // Custom user-typed sports won't be in the dictionary — fall back to the
+  // raw stored string with light cleanup so it still looks presentable.
+  if (sports && sports[type]) return sports[type]
   return type
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase())

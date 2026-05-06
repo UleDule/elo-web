@@ -5,11 +5,58 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import type { LangCode } from './types'
 import { SUPPORTED_LANGS } from './types'
 
-const LABELS: Record<LangCode, { flag: string; name: string }> = {
-  en: { flag: '🇬🇧', name: 'English' },
-  nb: { flag: '🇳🇴', name: 'Norsk' },
-  de: { flag: '🇩🇪', name: 'Deutsch' },
-  ru: { flag: '🇷🇺', name: 'Русский' },
+// Inline SVGs for reliable rendering across platforms (Windows in particular
+// has no flag emoji in system fonts, falling back to "RU RU" text glyphs).
+function FlagGB() {
+  return (
+    <svg viewBox="0 0 60 30" width="20" height="14" aria-hidden="true">
+      <clipPath id="t"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z" /></clipPath>
+      <path d="M0,0v30h60v-30z" fill="#012169" />
+      <path d="M0,0 60,30M60,0 0,30" stroke="#fff" strokeWidth="6" />
+      <path d="M0,0 60,30M60,0 0,30" clipPath="url(#t)" stroke="#C8102E" strokeWidth="4" />
+      <path d="M30,0v30M0,15h60" stroke="#fff" strokeWidth="10" />
+      <path d="M30,0v30M0,15h60" stroke="#C8102E" strokeWidth="6" />
+    </svg>
+  )
+}
+
+function FlagNO() {
+  return (
+    <svg viewBox="0 0 22 16" width="20" height="14" aria-hidden="true">
+      <rect width="22" height="16" fill="#EF2B2D" />
+      <rect x="6" width="2" height="16" fill="#fff" />
+      <rect y="7" width="22" height="2" fill="#fff" />
+      <rect x="6.5" width="1" height="16" fill="#002868" />
+      <rect y="7.5" width="22" height="1" fill="#002868" />
+    </svg>
+  )
+}
+
+function FlagDE() {
+  return (
+    <svg viewBox="0 0 5 3" width="20" height="14" aria-hidden="true">
+      <rect width="5" height="1" y="0" fill="#000" />
+      <rect width="5" height="1" y="1" fill="#DD0000" />
+      <rect width="5" height="1" y="2" fill="#FFCE00" />
+    </svg>
+  )
+}
+
+function FlagRU() {
+  return (
+    <svg viewBox="0 0 9 6" width="20" height="14" aria-hidden="true">
+      <rect width="9" height="2" y="0" fill="#fff" />
+      <rect width="9" height="2" y="2" fill="#0039A6" />
+      <rect width="9" height="2" y="4" fill="#D52B1E" />
+    </svg>
+  )
+}
+
+const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }> = {
+  en: { flag: FlagGB, name: 'English' },
+  nb: { flag: FlagNO, name: 'Norsk' },
+  de: { flag: FlagDE, name: 'Deutsch' },
+  ru: { flag: FlagRU, name: 'Русский' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
@@ -62,7 +109,7 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <span>{LABELS[current].flag}</span>
+        {(() => { const F = LABELS[current].flag; return <F /> })()}
         <span className="text-white text-xs font-medium uppercase tracking-wider">
           {current}
         </span>
@@ -107,7 +154,7 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
               role="option"
               aria-selected={lang === current}
             >
-              <span>{LABELS[lang].flag}</span>
+              {(() => { const F = LABELS[lang].flag; return <F /> })()}
               <span>{LABELS[lang].name}</span>
             </button>
           ))}

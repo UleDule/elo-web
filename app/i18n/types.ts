@@ -25,6 +25,8 @@ export type Dictionary = {
     metaLine: (gameType: string, playerCount: number) => string
     downloadAppToJoin: string
     joinButton: string
+    // Subline on the printable QR poster ("Download ELO Rankings and join...")
+    posterCta: string
   }
 
   // Claim page
@@ -45,6 +47,28 @@ export type Dictionary = {
 
   // Language switcher
   language: string
+
+  // Sport names. Keys match Sports.xxxKey in mobile app
+  // (lib/constants/sports.dart). Custom user-typed sports are not in this
+  // map and fall back to the raw stored string in formatGameType().
+  sports: {
+    table_tennis: string
+    chess: string
+    billiards: string
+    tennis: string
+    padel: string
+    darts: string
+    foosball: string
+    fifa: string
+    smash_bros: string
+    badminton: string
+    pool: string
+    arm_wrestling: string
+    go: string
+    backgammon: string
+    petanque: string
+    other: string
+  }
 }
 
 export type LangCode = 'en' | 'nb' | 'de' | 'ru'

@@ -17,6 +17,7 @@ export const en: Dictionary = {
       `${gameType} · ${playerCount} player${playerCount !== 1 ? 's' : ''}`,
     downloadAppToJoin: 'Download the app to join',
     joinButton: 'Open in app',
+    posterCta: 'Download ELO Rankings and join this leaderboard',
   },
 
   claim: {
@@ -34,4 +35,23 @@ export const en: Dictionary = {
   },
 
   language: 'Language',
+
+  sports: {
+    table_tennis: 'Table tennis',
+    chess: 'Chess',
+    billiards: 'Billiards',
+    tennis: 'Tennis',
+    padel: 'Padel',
+    darts: 'Darts',
+    foosball: 'Foosball',
+    fifa: 'FIFA',
+    smash_bros: 'Smash Bros',
+    badminton: 'Badminton',
+    pool: 'Pool',
+    arm_wrestling: 'Arm wrestling',
+    go: 'Go',
+    backgammon: 'Backgammon',
+    petanque: 'Pétanque',
+    other: 'Other',
+  },
 }
