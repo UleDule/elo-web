@@ -3,21 +3,35 @@ import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { getScoreboard, getProfile, formatGameType } from './lib'
 import JoinButton from './JoinButton'
+import { getDictionary } from '@/app/i18n'
+import type { Dictionary } from '@/app/i18n'
+import LanguageSwitcher from '@/app/i18n/LanguageSwitcher'
 
 // --- metadata ---
 
-type Props = { params: Promise<{ code: string }> }
+type Props = {
+  params: Promise<{ code: string }>
+  searchParams: Promise<{ lang?: string }>
+}
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { code } = await params
+  const { lang: searchLang } = await searchParams
   const sb = await getScoreboard(code)
   if (!sb) return { title: 'ELO Rankings' }
 
-  const title = `Join ${sb.name}`
+  const { lang, t } = await getDictionary(searchLang)
+  const title = t.join.joinHeadline(sb.name)
   const playerCount = sb.players.length
-  const description =
-    `${formatGameType(sb.game_type)} · ${playerCount} player${playerCount !== 1 ? 's' : ''}`
-  const url = `https://elorankings.com/join/${code}`
+  const description = t.join.metaLine(formatGameType(sb.game_type), playerCount)
+  const url = `https://elorankings.com/join/${code}?lang=${lang}`
+  // OG-bildet leser ?lang=xx fra URL-en for å rendre på riktig språk.
+  // Uten denne eksplisitte URL-en bruker Next.js auto-generert path uten
+  // query-parametere, så bildet ville alltid blitt rendret på engelsk.
+  const ogImageUrl = `https://elorankings.com/join/${code}/opengraph-image?lang=${lang}`
 
   return {
     metadataBase: new URL('https://elorankings.com'),
@@ -29,11 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       siteName: 'ELO Rankings',
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [ogImageUrl],
     },
   }
 }
@@ -67,11 +83,13 @@ function pickColor(name: string) {
 
 // --- page ---
 
-export default async function JoinPage({ params }: Props) {
+export default async function JoinPage({ params, searchParams }: Props) {
   const { code } = await params
+  const { lang: searchLang } = await searchParams
   const sb = await getScoreboard(code)
   if (!sb) notFound()
 
+  const { lang, t } = await getDictionary(searchLang)
   const joinUrl = `https://elorankings.com/join/${code}`
 
   const qrSvg = await QRCode.toString(joinUrl, {
@@ -86,12 +104,15 @@ export default async function JoinPage({ params }: Props) {
 
       {/* Hero */}
       <div
-        className="w-full text-center px-4 pt-10 pb-10"
+        className="w-full text-center px-4 pt-10 pb-10 relative"
         style={{
           background: 'linear-gradient(135deg, #181622 0%, #2D1B69 50%, #181622 100%)',
           borderBottom: '1px solid rgba(184,90,255,0.15)',
         }}
       >
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher current={lang} />
+        </div>
         <div className="flex items-center justify-center gap-3 mb-5">
           <div
             className="rounded-2xl p-1.5"
@@ -99,7 +120,7 @@ export default async function JoinPage({ params }: Props) {
           >
             <img
               src={LOGO_URL}
-              alt="ELO Rankings"
+              alt={t.appName}
               width={48}
               height={48}
               className="drop-shadow-[0_0_24px_rgba(184,90,255,0.8)]"
@@ -113,12 +134,12 @@ export default async function JoinPage({ params }: Props) {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            ELO Rankings
+            {t.appName}
           </span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">{sb.name}</h1>
         <p className="text-[#9B95A8] text-sm">
-          {formatGameType(sb.game_type)} &middot; {sb.players.length} player{sb.players.length !== 1 ? 's' : ''}
+          {t.join.metaLine(formatGameType(sb.game_type), sb.players.length)}
         </p>
       </div>
 
@@ -127,7 +148,7 @@ export default async function JoinPage({ params }: Props) {
 
         {/* Mobile CTA — shown above leaderboard on small screens */}
         <div className="lg:hidden">
-          <MobileCta name={sb.name} code={code} />
+          <MobileCta name={sb.name} code={code} t={t} />
         </div>
 
         {/* Leaderboard */}
@@ -174,7 +195,7 @@ export default async function JoinPage({ params }: Props) {
               className="rounded-2xl p-6 flex flex-col items-center text-center"
               style={{ background: '#1E1B2E', border: '1px solid rgba(184,90,255,0.12)' }}
             >
-              <p className="text-white font-semibold text-sm mb-5">Scan to join</p>
+              <p className="text-white font-semibold text-sm mb-5">{t.scanToJoin}</p>
               <div
                 className="rounded-xl p-5"
                 style={{ background: 'rgba(184,90,255,0.06)', border: '1px solid rgba(184,90,255,0.15)' }}
@@ -191,7 +212,7 @@ export default async function JoinPage({ params }: Props) {
             </div>
 
             {/* Download card */}
-            <DesktopDownloadCard name={sb.name} />
+            <DesktopDownloadCard name={sb.name} t={t} />
           </div>
         </div>
       </div>
@@ -266,31 +287,41 @@ function AvatarSquare({ name, url }: { name: string; url?: string | null }) {
   )
 }
 
-function MobileCta({ name, code }: { name: string; code: string }) {
+function MobileCta({
+  name,
+  code,
+  t,
+}: {
+  name: string
+  code: string
+  t: Dictionary
+}) {
   return (
     <div
       className="rounded-2xl p-5"
       style={{ background: '#1E1B2E', border: '1px solid rgba(184,90,255,0.12)' }}
     >
       <p className="text-[#9B95A8] text-sm text-center mb-4">
-        Join <strong className="text-white">{name}</strong>
+        {t.join.downloadAppToJoin}{' '}
+        <strong className="text-white">{name}</strong>
       </p>
       <JoinButton code={code} />
       <p className="text-[11px] text-[#6B6577] text-center mt-3">
-        Don&apos;t have the app? We&apos;ll take you to the store.
+        {t.dontHaveApp}
       </p>
     </div>
   )
 }
 
-function DesktopDownloadCard({ name }: { name: string }) {
+function DesktopDownloadCard({ name, t }: { name: string; t: Dictionary }) {
   return (
     <div
       className="rounded-2xl p-5"
       style={{ background: '#1E1B2E', border: '1px solid rgba(184,90,255,0.12)' }}
     >
       <p className="text-[#9B95A8] text-sm text-center mb-4">
-        Download the app to join <strong className="text-white">{name}</strong>
+        {t.join.downloadAppToJoin}{' '}
+        <strong className="text-white">{name}</strong>
       </p>
       <div className="flex gap-3">
         <a

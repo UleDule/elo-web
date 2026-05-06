@@ -2,15 +2,29 @@ import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { getClaim, formatGameType } from './lib'
+import { en } from '@/app/i18n/dictionaries/en'
+import { nb } from '@/app/i18n/dictionaries/nb'
+import { de } from '@/app/i18n/dictionaries/de'
+import { ru } from '@/app/i18n/dictionaries/ru'
+import { isSupportedLang } from '@/app/i18n/types'
+import type { Dictionary, LangCode } from '@/app/i18n/types'
+
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru }
 
 export const contentType = 'image/png'
 export const size = { width: 1200, height: 630 }
 export const alt = 'Take over an account on ELO Rankings'
 
-type Props = { params: Promise<{ code: string }> }
+type Props = {
+  params: Promise<{ code: string }>
+  searchParams?: Promise<{ lang?: string }>
+}
 
-export default async function Image({ params }: Props) {
+export default async function Image({ params, searchParams }: Props) {
   const { code } = await params
+  const sp = (await searchParams) ?? {}
+  const lang: LangCode = isSupportedLang(sp.lang) ? sp.lang : 'en'
+  const t = dicts[lang]
   const claim = await getClaim(code)
   const guestName = claim?.guest_name ?? 'Player'
   const listName = claim?.list_name ?? 'ELO Rankings'
@@ -73,7 +87,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            You&apos;re invited
+            {t.claim.youAreInvited}
           </div>
           <div
             style={{
@@ -96,7 +110,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            The spot as {guestName}
+            {t.claim.spotAs} {guestName}
             {gameType ? ` · ${gameType}` : ''}
           </div>
 
@@ -132,7 +146,7 @@ export default async function Image({ params }: Props) {
                     marginTop: 4,
                   }}
                 >
-                  ELO
+                  {t.claim.eloLabel}
                 </span>
               </div>
               <div
@@ -159,7 +173,7 @@ export default async function Image({ params }: Props) {
                     marginTop: 4,
                   }}
                 >
-                  Match{games !== 1 ? 'es' : ''}
+                  {t.claim.matchesLabel(games)}
                 </span>
               </div>
             </div>

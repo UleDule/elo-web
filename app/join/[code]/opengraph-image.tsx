@@ -2,15 +2,29 @@ import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { getScoreboard, formatGameType } from './lib'
+import { en } from '@/app/i18n/dictionaries/en'
+import { nb } from '@/app/i18n/dictionaries/nb'
+import { de } from '@/app/i18n/dictionaries/de'
+import { ru } from '@/app/i18n/dictionaries/ru'
+import { isSupportedLang } from '@/app/i18n/types'
+import type { Dictionary, LangCode } from '@/app/i18n/types'
+
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru }
 
 export const contentType = 'image/png'
 export const size = { width: 1200, height: 630 }
 export const alt = 'Join on ELO Rankings'
 
-type Props = { params: Promise<{ code: string }> }
+type Props = {
+  params: Promise<{ code: string }>
+  searchParams?: Promise<{ lang?: string }>
+}
 
-export default async function Image({ params }: Props) {
+export default async function Image({ params, searchParams }: Props) {
   const { code } = await params
+  const sp = (await searchParams) ?? {}
+  const lang: LangCode = isSupportedLang(sp.lang) ? sp.lang : 'en'
+  const t = dicts[lang]
   const sb = await getScoreboard(code)
   const name = sb?.name ?? 'ELO Rankings'
   const playerCount = sb?.players.length ?? 0
@@ -76,7 +90,7 @@ export default async function Image({ params }: Props) {
               display: 'flex',
             }}
           >
-            You're invited
+            {t.join.youAreInvited}
           </div>
           <div
             style={{
@@ -100,7 +114,7 @@ export default async function Image({ params }: Props) {
                 display: 'flex',
               }}
             >
-              {gameType} · {playerCount} player{playerCount !== 1 ? 's' : ''}
+              {t.join.metaLine(gameType, playerCount)}
             </div>
           )}
           <div

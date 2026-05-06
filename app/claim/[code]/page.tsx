@@ -3,20 +3,33 @@ import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { getClaim, formatGameType } from './lib'
 import ClaimButton from './ClaimButton'
+import { getDictionary } from '@/app/i18n'
+import LanguageSwitcher from '@/app/i18n/LanguageSwitcher'
 
 // --- metadata ---
 
-type Props = { params: Promise<{ code: string }> }
+type Props = {
+  params: Promise<{ code: string }>
+  searchParams: Promise<{ lang?: string }>
+}
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { code } = await params
+  const { lang: searchLang } = await searchParams
   const claim = await getClaim(code)
   if (!claim) return { title: 'ELO Rankings' }
 
-  const title = `Take ${claim.guest_name}'s spot in ${claim.list_name}`
-  const description =
-    `${claim.guest_elo} ELO · ${claim.guest_total_games} match${claim.guest_total_games !== 1 ? 'es' : ''} of history`
-  const url = `https://elorankings.com/claim/${code}`
+  const { lang, t } = await getDictionary(searchLang)
+  const title = `${t.claim.takeSpot}: ${claim.guest_name} (${claim.list_name})`
+  const description = `${claim.guest_elo} ELO · ${claim.guest_total_games} ${t.claim.matchesLabel(claim.guest_total_games)}`
+  const url = `https://elorankings.com/claim/${code}?lang=${lang}`
+  // OG-bildet leser ?lang=xx fra URL-en for å rendre på riktig språk.
+  // Uten denne eksplisitte URL-en bruker Next.js auto-generert path uten
+  // query-parametere, så bildet ville alltid blitt rendret på engelsk.
+  const ogImageUrl = `https://elorankings.com/claim/${code}/opengraph-image?lang=${lang}`
 
   return {
     metadataBase: new URL('https://elorankings.com'),
@@ -28,11 +41,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       siteName: 'ELO Rankings',
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [ogImageUrl],
     },
   }
 }
@@ -56,11 +71,13 @@ function pickColor(name: string) {
 
 // --- page ---
 
-export default async function ClaimPage({ params }: Props) {
+export default async function ClaimPage({ params, searchParams }: Props) {
   const { code } = await params
+  const { lang: searchLang } = await searchParams
   const claim = await getClaim(code)
   if (!claim) notFound()
 
+  const { lang, t } = await getDictionary(searchLang)
   const claimUrl = `https://elorankings.com/claim/${code}`
 
   const qrSvg = await QRCode.toString(claimUrl, {
@@ -74,13 +91,16 @@ export default async function ClaimPage({ params }: Props) {
     <div className="min-h-screen flex flex-col items-center">
       {/* Hero */}
       <div
-        className="w-full text-center px-4 pt-10 pb-10"
+        className="w-full text-center px-4 pt-10 pb-10 relative"
         style={{
           background:
             'linear-gradient(135deg, #181622 0%, #2D1B69 50%, #181622 100%)',
           borderBottom: '1px solid rgba(184,90,255,0.15)',
         }}
       >
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher current={lang} />
+        </div>
         <div className="flex items-center justify-center gap-3 mb-5">
           <div
             className="rounded-2xl p-1.5"
@@ -89,7 +109,7 @@ export default async function ClaimPage({ params }: Props) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={LOGO_URL}
-              alt="ELO Rankings"
+              alt={t.appName}
               width={48}
               height={48}
               className="drop-shadow-[0_0_24px_rgba(184,90,255,0.8)]"
@@ -103,7 +123,7 @@ export default async function ClaimPage({ params }: Props) {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            ELO Rankings
+            {t.appName}
           </span>
         </div>
 
@@ -115,14 +135,14 @@ export default async function ClaimPage({ params }: Props) {
             border: '1px solid rgba(184,90,255,0.3)',
           }}
         >
-          You&apos;re invited
+          {t.claim.youAreInvited}
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
           {claim.list_name}
         </h1>
         <p className="text-[#9B95A8] text-sm">
-          The spot as{' '}
+          {t.claim.spotAs}{' '}
           <span className="text-white font-semibold">{claim.guest_name}</span>{' '}
           &middot; {formatGameType(claim.game_type)}
         </p>
@@ -138,13 +158,13 @@ export default async function ClaimPage({ params }: Props) {
             border: '1px solid rgba(184,90,255,0.12)',
           }}
         >
-          <Stat label="ELO" value={claim.guest_elo.toString()} />
+          <Stat label={t.claim.eloLabel} value={claim.guest_elo.toString()} />
           <div
             className="h-10 w-px"
             style={{ background: 'rgba(184,90,255,0.18)' }}
           />
           <Stat
-            label={`Match${claim.guest_total_games !== 1 ? 'es played' : ''}`}
+            label={t.claim.matchesPlayedLabel(claim.guest_total_games)}
             value={claim.guest_total_games.toString()}
           />
         </div>
@@ -159,13 +179,11 @@ export default async function ClaimPage({ params }: Props) {
         >
           <AvatarSquare name={claim.guest_name} url={null} />
           <p className="text-[#C9BFDB] text-sm mt-4 mb-1">
-            Take{' '}
-            <strong className="text-white">{claim.guest_name}</strong>&apos;s
-            spot
+            {t.claim.takeSpot}:{' '}
+            <strong className="text-white">{claim.guest_name}</strong>
           </p>
           <p className="text-[12px] text-[#9B95A8] leading-relaxed max-w-md mx-auto">
-            You&apos;ll take the spot as this player. ELO and match history are
-            preserved. Your name, avatar and country replace the guest profile.
+            {t.claim.takeSpotExplainer}
           </p>
         </div>
 
@@ -173,7 +191,7 @@ export default async function ClaimPage({ params }: Props) {
         <div className="lg:hidden">
           <ClaimButton code={code} />
           <p className="text-[11px] text-[#6B6577] text-center mt-3">
-            Don&apos;t have the app? We&apos;ll take you to the store.
+            {t.dontHaveApp}
           </p>
         </div>
 
@@ -187,7 +205,7 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-white font-semibold text-sm mb-5">
-              Scan to take the spot
+              {t.claim.scanToClaim}
             </p>
             <div
               className="rounded-xl p-5"
@@ -207,9 +225,7 @@ export default async function ClaimPage({ params }: Props) {
             }}
           >
             <p className="text-[#9B95A8] text-sm text-center mb-4">
-              Download the app to take{' '}
-              <strong className="text-white">{claim.guest_name}</strong>&apos;s
-              spot in{' '}
+              {t.claim.downloadAppToClaim}{' '}
               <strong className="text-white">{claim.list_name}</strong>
             </p>
             <div className="flex flex-col gap-3">
