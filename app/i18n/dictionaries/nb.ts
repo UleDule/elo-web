@@ -16,7 +16,7 @@ export const nb: Dictionary = {
     metaLine: (gameType, playerCount) =>
       `${gameType} · ${playerCount} ${playerCount === 1 ? 'spiller' : 'spillere'}`,
     downloadAppToJoin: 'Last ned appen for å bli med i',
-    joinButton: 'Åpne i app',
+    joinButton: 'Bli med i scoreboardet',
     posterCta: 'Last ned ELO Rankings og bli med i scoreboardet',
   },
 
@@ -30,7 +30,7 @@ export const nb: Dictionary = {
     matchesLabel: (count) => (count === 1 ? 'Kamp' : 'Kamper'),
     matchesPlayedLabel: (count) => (count === 1 ? 'Kamp' : 'Kamper spilt'),
     scanToClaim: 'Skann for å ta plassen',
-    claimButton: 'Åpne i app',
+    claimButton: 'Ta plassen',
     downloadAppToClaim: 'Last ned appen for å ta plassen i',
   },
 

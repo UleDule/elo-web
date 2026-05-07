@@ -190,7 +190,7 @@ export default async function ClaimPage({ params, searchParams }: Props) {
 
         {/* Mobile CTA */}
         <div className="lg:hidden">
-          <ClaimButton code={code} />
+          <ClaimButton code={code} label={t.claim.claimButton} />
           <p className="text-[11px] text-[#6B6577] text-center mt-3">
             {t.dontHaveApp}
           </p>

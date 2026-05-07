@@ -306,7 +306,7 @@ function MobileCta({
         {t.join.downloadAppToJoin}{' '}
         <strong className="text-white">{name}</strong>
       </p>
-      <JoinButton code={code} />
+      <JoinButton code={code} label={t.join.joinButton} />
       <p className="text-[11px] text-[#6B6577] text-center mt-3">
         {t.dontHaveApp}
       </p>

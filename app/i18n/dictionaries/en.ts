@@ -16,7 +16,7 @@ export const en: Dictionary = {
     metaLine: (gameType, playerCount) =>
       `${gameType} · ${playerCount} player${playerCount !== 1 ? 's' : ''}`,
     downloadAppToJoin: 'Download the app to join',
-    joinButton: 'Open in app',
+    joinButton: 'Join scoreboard',
     posterCta: 'Download ELO Rankings and join this leaderboard',
   },
 
@@ -30,7 +30,7 @@ export const en: Dictionary = {
     matchesLabel: (count) => (count === 1 ? 'Match' : 'Matches'),
     matchesPlayedLabel: (count) => (count === 1 ? 'Match' : 'Matches played'),
     scanToClaim: 'Scan to take the spot',
-    claimButton: 'Open in app',
+    claimButton: 'Take the spot',
     downloadAppToClaim: 'Download the app to take the spot in',
   },
 

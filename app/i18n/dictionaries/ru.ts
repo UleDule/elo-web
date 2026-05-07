@@ -33,7 +33,7 @@ export const ru: Dictionary = {
         'игроков',
       )}`,
     downloadAppToJoin: 'Скачай приложение, чтобы присоединиться к',
-    joinButton: 'Открыть в приложении',
+    joinButton: 'Присоединиться',
     posterCta: 'Скачай ELO Rankings и присоединяйся к этой таблице',
   },
 
@@ -49,7 +49,7 @@ export const ru: Dictionary = {
     matchesPlayedLabel: (count) =>
       ruPlural(count, 'матч сыгран', 'матча сыграно', 'матчей сыграно'),
     scanToClaim: 'Сканируй, чтобы занять место',
-    claimButton: 'Открыть в приложении',
+    claimButton: 'Занять место',
     downloadAppToClaim: 'Скачай приложение, чтобы занять место в',
   },
 
