@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { getScoreboard, formatGameType } from './lib'
+import { getScoreboard, formatGameType } from '../../lib'
 import { en } from '@/app/i18n/dictionaries/en'
 import { nb } from '@/app/i18n/dictionaries/nb'
 import { de } from '@/app/i18n/dictionaries/de'
@@ -11,20 +11,20 @@ import type { Dictionary, LangCode } from '@/app/i18n/types'
 
 const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru }
 
-export const contentType = 'image/png'
-export const size = { width: 1200, height: 630 }
-export const alt = 'Join on ELO Rankings'
+const SIZE = { width: 1200, height: 630 }
 
-type Props = {
-  params: Promise<{ code: string }>
-  searchParams?: Promise<{ lang?: string }>
-}
-
-export default async function Image({ params, searchParams }: Props) {
-  const { code } = await params
-  const sp = (await searchParams) ?? {}
-  const lang: LangCode = isSupportedLang(sp.lang) ? sp.lang : 'en'
+// Path-basert språk: /join/[code]/og/[lang]. Vi bruker Route Handler her
+// fordi Next.js' opengraph-image.tsx-spesialfil ikke videresender
+// searchParams til renderen — bildet ble alltid rendret på engelsk.
+// Med språk i path-segmentet kommer det inn via params og fungerer pålitelig.
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ code: string; lang: string }> },
+) {
+  const { code, lang: rawLang } = await params
+  const lang: LangCode = isSupportedLang(rawLang) ? rawLang : 'en'
   const t = dicts[lang]
+
   const sb = await getScoreboard(code)
   const name = sb?.name ?? 'ELO Rankings'
   const playerCount = sb?.players.length ?? 0
@@ -134,6 +134,6 @@ export default async function Image({ params, searchParams }: Props) {
         </div>
       </div>
     ),
-    { ...size },
+    { ...SIZE },
   )
 }

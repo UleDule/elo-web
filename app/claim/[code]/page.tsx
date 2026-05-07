@@ -26,10 +26,11 @@ export async function generateMetadata({
   const title = `${t.claim.takeSpot}: ${claim.guest_name} (${claim.list_name})`
   const description = `${claim.guest_elo} ELO · ${claim.guest_total_games} ${t.claim.matchesLabel(claim.guest_total_games)}`
   const url = `https://elorankings.com/claim/${code}?lang=${lang}`
-  // OG-bildet leser ?lang=xx fra URL-en for å rendre på riktig språk.
-  // Uten denne eksplisitte URL-en bruker Next.js auto-generert path uten
-  // query-parametere, så bildet ville alltid blitt rendret på engelsk.
-  const ogImageUrl = `https://elorankings.com/claim/${code}/opengraph-image?lang=${lang}`
+  // OG-bildet bruker språk i path (ikke query) fordi Next.js'
+  // opengraph-image.tsx-spesialfil ikke videresender searchParams til
+  // renderen — bildet ble alltid rendret på engelsk. Med språk i path-
+  // segmentet kommer det inn via params og fungerer pålitelig.
+  const ogImageUrl = `https://elorankings.com/claim/${code}/og/${lang}`
 
   return {
     metadataBase: new URL('https://elorankings.com'),

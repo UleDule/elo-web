@@ -28,10 +28,11 @@ export async function generateMetadata({
   const playerCount = sb.players.length
   const description = t.join.metaLine(formatGameType(sb.game_type, t.sports), playerCount)
   const url = `https://elorankings.com/join/${code}?lang=${lang}`
-  // OG-bildet leser ?lang=xx fra URL-en for å rendre på riktig språk.
-  // Uten denne eksplisitte URL-en bruker Next.js auto-generert path uten
-  // query-parametere, så bildet ville alltid blitt rendret på engelsk.
-  const ogImageUrl = `https://elorankings.com/join/${code}/opengraph-image?lang=${lang}`
+  // OG-bildet bruker språk i path (ikke query) fordi Next.js'
+  // opengraph-image.tsx-spesialfil ikke videresender searchParams til
+  // renderen — bildet ble alltid rendret på engelsk. Med språk i path-
+  // segmentet kommer det inn via params og fungerer pålitelig.
+  const ogImageUrl = `https://elorankings.com/join/${code}/og/${lang}`
 
   return {
     metadataBase: new URL('https://elorankings.com'),

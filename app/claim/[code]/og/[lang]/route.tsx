@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { getClaim, formatGameType } from './lib'
+import { getClaim, formatGameType } from '../../lib'
 import { en } from '@/app/i18n/dictionaries/en'
 import { nb } from '@/app/i18n/dictionaries/nb'
 import { de } from '@/app/i18n/dictionaries/de'
@@ -11,20 +11,18 @@ import type { Dictionary, LangCode } from '@/app/i18n/types'
 
 const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru }
 
-export const contentType = 'image/png'
-export const size = { width: 1200, height: 630 }
-export const alt = 'Take over an account on ELO Rankings'
+const SIZE = { width: 1200, height: 630 }
 
-type Props = {
-  params: Promise<{ code: string }>
-  searchParams?: Promise<{ lang?: string }>
-}
-
-export default async function Image({ params, searchParams }: Props) {
-  const { code } = await params
-  const sp = (await searchParams) ?? {}
-  const lang: LangCode = isSupportedLang(sp.lang) ? sp.lang : 'en'
+// Path-basert språk: /claim/[code]/og/[lang]. Se kommentar i join-versjonen
+// for hvorfor vi bruker Route Handler i stedet for opengraph-image.tsx.
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ code: string; lang: string }> },
+) {
+  const { code, lang: rawLang } = await params
+  const lang: LangCode = isSupportedLang(rawLang) ? rawLang : 'en'
   const t = dicts[lang]
+
   const claim = await getClaim(code)
   const guestName = claim?.guest_name ?? 'Player'
   const listName = claim?.list_name ?? 'ELO Rankings'
@@ -196,6 +194,6 @@ export default async function Image({ params, searchParams }: Props) {
         </div>
       </div>
     ),
-    { ...size },
+    { ...SIZE },
   )
 }
