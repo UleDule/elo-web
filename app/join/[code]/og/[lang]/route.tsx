@@ -39,6 +39,14 @@ export async function GET(
   )
   const logoSrc = `data:image/png;base64,${logoBuffer.toString('base64')}`
 
+  // For Arabic, Satori needs an explicit font with Arabic glyphs — system
+  // sans-serif fallback doesn't include Arabic, which causes the OG image
+  // to fail rendering (silent fail in messengers). Cairo handles both Arabic
+  // and Latin, so we only need to load it for Arabic locale.
+  const arabicFont = lang === 'ar'
+    ? await readFile(join(process.cwd(), 'public', 'fonts', 'Cairo-Variable.ttf'))
+    : null
+
   return new ImageResponse(
     (
       <div
@@ -52,7 +60,7 @@ export async function GET(
           backgroundImage:
             'radial-gradient(circle at 30% 50%, #4A1F8C 0%, #1A0B33 60%)',
           color: 'white',
-          fontFamily: 'sans-serif',
+          fontFamily: lang === 'ar' ? 'Cairo, sans-serif' : 'sans-serif',
           padding: '60px 80px',
         }}
       >
@@ -136,6 +144,18 @@ export async function GET(
         </div>
       </div>
     ),
-    { ...SIZE },
+    {
+      ...SIZE,
+      fonts: arabicFont
+        ? [
+            {
+              name: 'Cairo',
+              data: arabicFont,
+              weight: 700,
+              style: 'normal',
+            },
+          ]
+        : undefined,
+    },
   )
 }
