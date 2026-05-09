@@ -58,18 +58,6 @@ export async function generateMetadata({
 const LOGO_URL =
   'https://hpbtgieebhhowxwbxshd.supabase.co/storage/v1/object/public/ui/TrofeTransparens.png'
 
-// Speilet fra join/page.tsx — samme avatar-palette som mobil-appen.
-const ACCENT_COLORS = [
-  '#B85AFF4D', '#EC48994D', '#EF44444D', '#F973164D',
-  '#EAB3084D', '#22C55E4D', '#06B6D44D', '#3B82F64D',
-]
-
-function pickColor(name: string) {
-  let h = 0
-  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h)
-  return ACCENT_COLORS[Math.abs(h) % ACCENT_COLORS.length]
-}
-
 // --- page ---
 
 export default async function ClaimPage({ params, searchParams }: Props) {
@@ -170,7 +158,9 @@ export default async function ClaimPage({ params, searchParams }: Props) {
           />
         </div>
 
-        {/* Explainer */}
+        {/* Explainer — ingen avatar her, fordi gjestespillere alltid mangler
+            bilde og initial-avataren bare ville dyttet join-knappen lenger
+            ned. Navnet stiges i visuell vekt for å fortsatt være tydelig. */}
         <div
           className="rounded-2xl p-5 text-center"
           style={{
@@ -178,8 +168,7 @@ export default async function ClaimPage({ params, searchParams }: Props) {
             border: '1px solid rgba(184,90,255,0.12)',
           }}
         >
-          <AvatarSquare name={claim.guest_name} url={null} />
-          <p className="text-[#C9BFDB] text-sm mt-4 mb-1">
+          <p className="text-[#C9BFDB] text-base mb-2">
             {t.claim.takeSpot}:{' '}
             <strong className="text-white">{claim.guest_name}</strong>
           </p>
@@ -288,35 +277,6 @@ function Stat({ label, value }: { label: string; value: string }) {
   )
 }
 
-function AvatarSquare({ name, url }: { name: string; url?: string | null }) {
-  const size = 72
-  if (url) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={url}
-        alt=""
-        width={size}
-        height={size}
-        className="rounded-2xl object-cover ring-1 ring-white/10 mx-auto"
-        style={{ width: size, height: size }}
-      />
-    )
-  }
-  return (
-    <span
-      className="rounded-2xl flex items-center justify-center text-white font-bold ring-1 ring-white/10 mx-auto"
-      style={{
-        width: size,
-        height: size,
-        fontSize: 30,
-        background: pickColor(name),
-      }}
-    >
-      {name.charAt(0).toUpperCase()}
-    </span>
-  )
-}
 
 function AppleIcon() {
   return (
