@@ -61,6 +61,17 @@ function FlagPL() {
   )
 }
 
+// Spansk flagg (rød-gul-rød horisontal). Forenklet uten våpenskjold.
+function FlagES() {
+  return (
+    <svg viewBox="0 0 12 8" width="20" height="14" aria-hidden="true">
+      <rect width="12" height="2" y="0" fill="#AA151B" />
+      <rect width="12" height="4" y="2" fill="#F1BF00" />
+      <rect width="12" height="2" y="6" fill="#AA151B" />
+    </svg>
+  )
+}
+
 // Fransk flagg (tricolore — blå, hvit, rød vertikal).
 function FlagFR() {
   return (
@@ -100,6 +111,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   pl: { flag: FlagPL, name: 'Polski' },
   ar: { flag: FlagAR, name: 'العربية' },
   fr: { flag: FlagFR, name: 'Français' },
+  es: { flag: FlagES, name: 'Español' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
