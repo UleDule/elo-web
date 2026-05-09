@@ -217,9 +217,21 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
           }}
           role="listbox"
         >
-          {DISPLAY_ORDER.map((lang) => (
+          {DISPLAY_ORDER.map((lang, idx) => (
+            <div key={lang}>
+              {/* Tynn skille mellom engelsk (toppen) og resten av språkene
+                  som er sortert alfabetisk. Markerer at engelsk er
+                  prioritert/fallback, ikke del av alfabetisk lista. */}
+              {idx === 1 && (
+                <div
+                  style={{
+                    height: 1,
+                    margin: '4px 8px',
+                    background: 'rgba(184,90,255,0.15)',
+                  }}
+                />
+              )}
             <button
-              key={lang}
               type="button"
               onClick={() => pick(lang)}
               className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors hover:brightness-150 ${
