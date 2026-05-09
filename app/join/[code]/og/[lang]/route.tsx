@@ -43,8 +43,10 @@ export async function GET(
   // sans-serif fallback doesn't include Arabic, which causes the OG image
   // to fail rendering (silent fail in messengers). Cairo handles both Arabic
   // and Latin, so we only need to load it for Arabic locale.
+  // Static Cairo-Bold (not variable font — Satori doesn't reliably handle
+  // variable fonts and silently fails with a 500 error). 73KB on disk.
   const arabicFont = lang === 'ar'
-    ? await readFile(join(process.cwd(), 'public', 'fonts', 'Cairo-Variable.ttf'))
+    ? await readFile(join(process.cwd(), 'public', 'fonts', 'Cairo-Bold.ttf'))
     : null
 
   return new ImageResponse(
