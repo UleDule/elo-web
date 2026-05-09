@@ -61,6 +61,18 @@ function FlagPL() {
   )
 }
 
+// Tyrkisk flagg (rødt med hvit halvmåne og stjerne). Forenklet — bare halvmåne
+// og rød bakgrunn er gjenkjennelig nok på 14px.
+function FlagTR() {
+  return (
+    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
+      <rect width="30" height="20" fill="#E30A17" />
+      <circle cx="11" cy="10" r="4.5" fill="#fff" />
+      <circle cx="12" cy="10" r="3.5" fill="#E30A17" />
+    </svg>
+  )
+}
+
 // Spansk flagg (rød-gul-rød horisontal). Forenklet uten våpenskjold.
 function FlagES() {
   return (
@@ -112,6 +124,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   ar: { flag: FlagAR, name: 'العربية' },
   fr: { flag: FlagFR, name: 'Français' },
   es: { flag: FlagES, name: 'Español' },
+  tr: { flag: FlagTR, name: 'Türkçe' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
