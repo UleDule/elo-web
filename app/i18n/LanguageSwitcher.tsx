@@ -116,6 +116,17 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
 
 const STORAGE_KEY = 'elorankings.lang'
 
+// Visnings-rekkefølge i drop-down: engelsk først (fallback for alle som ikke
+// finner sitt eget språk), så resten alfabetisk på lokalt navn (Deutsch,
+// English, Español, ...). Bevisst forskjellig fra SUPPORTED_LANGS som er
+// teknisk rekkefølge.
+const DISPLAY_ORDER: LangCode[] = (() => {
+  const rest = SUPPORTED_LANGS.filter((l) => l !== 'en').sort((a, b) =>
+    LABELS[a].name.localeCompare(LABELS[b].name),
+  )
+  return ['en', ...rest]
+})()
+
 export default function LanguageSwitcher({ current }: { current: LangCode }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -193,7 +204,7 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
           }}
           role="listbox"
         >
-          {SUPPORTED_LANGS.map((lang) => (
+          {DISPLAY_ORDER.map((lang) => (
             <button
               key={lang}
               type="button"
