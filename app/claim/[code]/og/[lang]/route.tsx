@@ -8,10 +8,11 @@ import { de } from '@/app/i18n/dictionaries/de'
 import { ru } from '@/app/i18n/dictionaries/ru'
 import { pl } from '@/app/i18n/dictionaries/pl'
 import { ar } from '@/app/i18n/dictionaries/ar'
+import { fr } from '@/app/i18n/dictionaries/fr'
 import { isSupportedLang } from '@/app/i18n/types'
 import type { Dictionary, LangCode } from '@/app/i18n/types'
 
-const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar }
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr }
 
 const SIZE = { width: 1200, height: 630 }
 

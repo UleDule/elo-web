@@ -61,6 +61,17 @@ function FlagPL() {
   )
 }
 
+// Fransk flagg (tricolore — blå, hvit, rød vertikal).
+function FlagFR() {
+  return (
+    <svg viewBox="0 0 9 6" width="20" height="14" aria-hidden="true">
+      <rect width="3" height="6" x="0" fill="#0055A4" />
+      <rect width="3" height="6" x="3" fill="#fff" />
+      <rect width="3" height="6" x="6" fill="#EF4135" />
+    </svg>
+  )
+}
+
 // Forenklet Saudi-arabisk flagg — brukes som standard "arabisk språk"-flagg
 // i web-kontekst. Grønn bakgrunn med hvitt arabisk skrift-element (forenklet
 // horisontal strek under feltet for shahada) og forenklet sverd. Vi unngår
@@ -88,6 +99,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   ru: { flag: FlagRU, name: 'Русский' },
   pl: { flag: FlagPL, name: 'Polski' },
   ar: { flag: FlagAR, name: 'العربية' },
+  fr: { flag: FlagFR, name: 'Français' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
