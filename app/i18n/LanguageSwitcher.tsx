@@ -52,11 +52,21 @@ function FlagRU() {
   )
 }
 
+function FlagPL() {
+  return (
+    <svg viewBox="0 0 8 5" width="20" height="14" aria-hidden="true">
+      <rect width="8" height="2.5" y="0" fill="#fff" stroke="#ccc" strokeWidth="0.05" />
+      <rect width="8" height="2.5" y="2.5" fill="#DC143C" />
+    </svg>
+  )
+}
+
 const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }> = {
   en: { flag: FlagGB, name: 'English' },
   nb: { flag: FlagNO, name: 'Norsk' },
   de: { flag: FlagDE, name: 'Deutsch' },
   ru: { flag: FlagRU, name: 'Русский' },
+  pl: { flag: FlagPL, name: 'Polski' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
