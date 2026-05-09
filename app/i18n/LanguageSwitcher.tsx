@@ -61,12 +61,33 @@ function FlagPL() {
   )
 }
 
+// Forenklet Saudi-arabisk flagg — brukes som standard "arabisk språk"-flagg
+// i web-kontekst. Grønn bakgrunn med hvitt arabisk skrift-element (forenklet
+// horisontal strek under feltet for shahada) og forenklet sverd. Vi unngår
+// faktisk shahada-tekst av respekt — den skal ikke vises på 14px.
+function FlagAR() {
+  return (
+    <svg viewBox="0 0 22 14" width="20" height="14" aria-hidden="true">
+      <rect width="22" height="14" fill="#006C35" />
+      <rect x="3" y="5" width="16" height="0.6" fill="#fff" />
+      <rect x="3" y="7.5" width="13" height="0.4" fill="#fff" />
+      <path
+        d="M3 10 L19 10"
+        stroke="#fff"
+        strokeWidth="0.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }> = {
   en: { flag: FlagGB, name: 'English' },
   nb: { flag: FlagNO, name: 'Norsk' },
   de: { flag: FlagDE, name: 'Deutsch' },
   ru: { flag: FlagRU, name: 'Русский' },
   pl: { flag: FlagPL, name: 'Polski' },
+  ar: { flag: FlagAR, name: 'العربية' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'

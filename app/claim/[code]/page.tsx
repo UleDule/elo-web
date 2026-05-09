@@ -77,7 +77,10 @@ export default async function ClaimPage({ params, searchParams }: Props) {
   })
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div
+      className="min-h-screen flex flex-col items-center"
+      dir={lang === 'ar' ? 'rtl' : 'ltr'}
+    >
       {/* Hero */}
       <div
         className="w-full text-center px-4 pt-10 pb-10 relative"

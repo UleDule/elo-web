@@ -101,7 +101,10 @@ export default async function JoinPage({ params, searchParams }: Props) {
   })
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div
+      className="min-h-screen flex flex-col items-center"
+      dir={lang === 'ar' ? 'rtl' : 'ltr'}
+    >
 
       {/* Hero */}
       <div
