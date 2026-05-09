@@ -248,6 +248,7 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
               {(() => { const F = LABELS[lang].flag; return <F /> })()}
               <span>{LABELS[lang].name}</span>
             </button>
+            </div>
           ))}
         </div>
       )}
