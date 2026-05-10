@@ -12,10 +12,11 @@ import { fr } from '@/app/i18n/dictionaries/fr'
 import { es } from '@/app/i18n/dictionaries/es'
 import { tr } from '@/app/i18n/dictionaries/tr'
 import { ja } from '@/app/i18n/dictionaries/ja'
+import { ko } from '@/app/i18n/dictionaries/ko'
 import { isSupportedLang } from '@/app/i18n/types'
 import type { Dictionary, LangCode } from '@/app/i18n/types'
 
-const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja }
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja, ko }
 
 const SIZE = { width: 1200, height: 630 }
 
@@ -59,6 +60,11 @@ export async function GET(
     ? await readFile(join(process.cwd(), 'public', 'fonts', 'NotoSansJP-Bold.ttf'))
     : null
 
+  // Noto Sans KR for Korean — same Satori glyph-coverage issue as JP/AR.
+  const koreanFont = lang === 'ko'
+    ? await readFile(join(process.cwd(), 'public', 'fonts', 'NotoSansKR-Bold.ttf'))
+    : null
+
   return new ImageResponse(
     (
       <div
@@ -77,7 +83,9 @@ export async function GET(
               ? 'Cairo, sans-serif'
               : lang === 'ja'
                 ? 'NotoSansJP, sans-serif'
-                : 'sans-serif',
+                : lang === 'ko'
+                  ? 'NotoSansKR, sans-serif'
+                  : 'sans-serif',
           padding: '60px 80px',
         }}
       >
@@ -181,7 +189,16 @@ export async function GET(
                 style: 'normal',
               },
             ]
-          : undefined,
+          : koreanFont
+            ? [
+                {
+                  name: 'NotoSansKR',
+                  data: koreanFont,
+                  weight: 700,
+                  style: 'normal',
+                },
+              ]
+            : undefined,
     },
   )
 }

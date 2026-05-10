@@ -105,6 +105,19 @@ function FlagFR() {
   )
 }
 
+// Sør-koreansk flagg (taeguki). Forenklet for 14px: hvit bakgrunn med
+// rød/blå yin-yang i sentrum. Trigrammene i hjørnene er for små til å
+// være lesbare og droppes for å beholde gjenkjennelighet.
+function FlagKO() {
+  return (
+    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
+      <rect width="30" height="20" fill="#fff" stroke="#ccc" strokeWidth="0.3" />
+      <path d="M15 4 a6 6 0 0 1 0 12 a3 3 0 0 0 0 -6 a3 3 0 0 1 0 -6" fill="#C60C30" />
+      <path d="M15 4 a6 6 0 0 0 0 12 a3 3 0 0 1 0 -6 a3 3 0 0 0 0 -6" fill="#003478" />
+    </svg>
+  )
+}
+
 // Forenklet Saudi-arabisk flagg — brukes som standard "arabisk språk"-flagg
 // i web-kontekst. Grønn bakgrunn med hvitt arabisk skrift-element (forenklet
 // horisontal strek under feltet for shahada) og forenklet sverd. Vi unngår
@@ -136,6 +149,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   es: { flag: FlagES, name: 'Español' },
   tr: { flag: FlagTR, name: 'Türkçe' },
   ja: { flag: FlagJA, name: '日本語' },
+  ko: { flag: FlagKO, name: '한국어' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
