@@ -105,15 +105,22 @@ function FlagFR() {
   )
 }
 
-// Sør-koreansk flagg (taeguki). Forenklet for 14px: hvit bakgrunn med
-// rød/blå yin-yang i sentrum. Trigrammene i hjørnene er for små til å
-// være lesbare og droppes for å beholde gjenkjennelighet.
+// Sør-koreansk flagg (taegukgi). Forenklet for 14px: hvit bakgrunn med
+// taeguk (yin-yang) i sentrum — rødt øverst, blått nederst, S-formet skille.
+// Trigrammene i hjørnene er for små til å være lesbare og droppes for å
+// beholde gjenkjennelighet.
 function FlagKO() {
   return (
     <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
       <rect width="30" height="20" fill="#fff" stroke="#ccc" strokeWidth="0.3" />
-      <path d="M15 4 a6 6 0 0 1 0 12 a3 3 0 0 0 0 -6 a3 3 0 0 1 0 -6" fill="#C60C30" />
-      <path d="M15 4 a6 6 0 0 0 0 12 a3 3 0 0 1 0 -6 a3 3 0 0 0 0 -6" fill="#003478" />
+      {/* Hele taeguk-sirkelen som rødt grunnlag */}
+      <circle cx="15" cy="10" r="5" fill="#C60C30" />
+      {/* Nedre halvdel som blå (overstyrer rødt under midt-linja) */}
+      <path d="M10 10 a5 5 0 0 0 10 0 z" fill="#003478" />
+      {/* S-skillet: blå halvsirkel pa hoyre side av midtlinja */}
+      <path d="M15 10 a2.5 2.5 0 0 1 5 0 a2.5 2.5 0 0 0 -5 0 z" fill="#003478" />
+      {/* S-skillet: rod halvsirkel pa venstre side av midtlinja */}
+      <path d="M10 10 a2.5 2.5 0 0 0 5 0 a2.5 2.5 0 0 1 -5 0 z" fill="#C60C30" />
     </svg>
   )
 }
