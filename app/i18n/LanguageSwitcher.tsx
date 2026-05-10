@@ -23,6 +23,7 @@ import TR from 'country-flag-icons/react/3x2/TR'
 import JP from 'country-flag-icons/react/3x2/JP'
 import KR from 'country-flag-icons/react/3x2/KR'
 import VN from 'country-flag-icons/react/3x2/VN'
+import UA from 'country-flag-icons/react/3x2/UA'
 
 const flagProps = { width: 24, height: 17, 'aria-hidden': true }
 
@@ -39,6 +40,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   ja: { flag: () => <JP {...flagProps} />, name: '日本語' },
   ko: { flag: () => <KR {...flagProps} />, name: '한국어' },
   vi: { flag: () => <VN {...flagProps} />, name: 'Tiếng Việt' },
+  uk: { flag: () => <UA {...flagProps} />, name: 'Українська' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
