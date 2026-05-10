@@ -1,162 +1,42 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import type { LangCode } from './types'
 import { SUPPORTED_LANGS } from './types'
 
-// Inline SVGs for reliable rendering across platforms (Windows in particular
-// has no flag emoji in system fonts, falling back to "RU RU" text glyphs).
-function FlagGB() {
-  return (
-    <svg viewBox="0 0 60 30" width="20" height="14" aria-hidden="true">
-      <clipPath id="t"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z" /></clipPath>
-      <path d="M0,0v30h60v-30z" fill="#012169" />
-      <path d="M0,0 60,30M60,0 0,30" stroke="#fff" strokeWidth="6" />
-      <path d="M0,0 60,30M60,0 0,30" clipPath="url(#t)" stroke="#C8102E" strokeWidth="4" />
-      <path d="M30,0v30M0,15h60" stroke="#fff" strokeWidth="10" />
-      <path d="M30,0v30M0,15h60" stroke="#C8102E" strokeWidth="6" />
-    </svg>
-  )
-}
+// Flag SVGs from country-flag-icons (MIT). 3x2-ratio variant matches the
+// proportions of most national flags. We import only the country codes we
+// use so tree-shaking keeps the bundle small.
+//
+// Flag emoji (🇰🇷 etc.) renders as fallback text "RU RU" on Windows because
+// Windows system fonts have no flag emoji glyphs — that's why we use SVGs.
+import GB from 'country-flag-icons/react/3x2/GB'
+import NO from 'country-flag-icons/react/3x2/NO'
+import DE from 'country-flag-icons/react/3x2/DE'
+import RU from 'country-flag-icons/react/3x2/RU'
+import PL from 'country-flag-icons/react/3x2/PL'
+import SA from 'country-flag-icons/react/3x2/SA'
+import FR from 'country-flag-icons/react/3x2/FR'
+import ES from 'country-flag-icons/react/3x2/ES'
+import TR from 'country-flag-icons/react/3x2/TR'
+import JP from 'country-flag-icons/react/3x2/JP'
+import KR from 'country-flag-icons/react/3x2/KR'
 
-function FlagNO() {
-  return (
-    <svg viewBox="0 0 22 16" width="20" height="14" aria-hidden="true">
-      <rect width="22" height="16" fill="#EF2B2D" />
-      <rect x="6" width="2" height="16" fill="#fff" />
-      <rect y="7" width="22" height="2" fill="#fff" />
-      <rect x="6.5" width="1" height="16" fill="#002868" />
-      <rect y="7.5" width="22" height="1" fill="#002868" />
-    </svg>
-  )
-}
-
-function FlagDE() {
-  return (
-    <svg viewBox="0 0 5 3" width="20" height="14" aria-hidden="true">
-      <rect width="5" height="1" y="0" fill="#000" />
-      <rect width="5" height="1" y="1" fill="#DD0000" />
-      <rect width="5" height="1" y="2" fill="#FFCE00" />
-    </svg>
-  )
-}
-
-function FlagRU() {
-  return (
-    <svg viewBox="0 0 9 6" width="20" height="14" aria-hidden="true">
-      <rect width="9" height="2" y="0" fill="#fff" />
-      <rect width="9" height="2" y="2" fill="#0039A6" />
-      <rect width="9" height="2" y="4" fill="#D52B1E" />
-    </svg>
-  )
-}
-
-function FlagPL() {
-  return (
-    <svg viewBox="0 0 8 5" width="20" height="14" aria-hidden="true">
-      <rect width="8" height="2.5" y="0" fill="#fff" stroke="#ccc" strokeWidth="0.05" />
-      <rect width="8" height="2.5" y="2.5" fill="#DC143C" />
-    </svg>
-  )
-}
-
-// Japansk flagg (hvit bakgrunn, rød sol-disk i midten).
-function FlagJA() {
-  return (
-    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
-      <rect width="30" height="20" fill="#fff" stroke="#ccc" strokeWidth="0.3" />
-      <circle cx="15" cy="10" r="6" fill="#BC002D" />
-    </svg>
-  )
-}
-
-// Tyrkisk flagg (rødt med hvit halvmåne og stjerne). Forenklet — bare halvmåne
-// og rød bakgrunn er gjenkjennelig nok på 14px.
-function FlagTR() {
-  return (
-    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
-      <rect width="30" height="20" fill="#E30A17" />
-      <circle cx="11" cy="10" r="4.5" fill="#fff" />
-      <circle cx="12" cy="10" r="3.5" fill="#E30A17" />
-    </svg>
-  )
-}
-
-// Spansk flagg (rød-gul-rød horisontal). Forenklet uten våpenskjold.
-function FlagES() {
-  return (
-    <svg viewBox="0 0 12 8" width="20" height="14" aria-hidden="true">
-      <rect width="12" height="2" y="0" fill="#AA151B" />
-      <rect width="12" height="4" y="2" fill="#F1BF00" />
-      <rect width="12" height="2" y="6" fill="#AA151B" />
-    </svg>
-  )
-}
-
-// Fransk flagg (tricolore — blå, hvit, rød vertikal).
-function FlagFR() {
-  return (
-    <svg viewBox="0 0 9 6" width="20" height="14" aria-hidden="true">
-      <rect width="3" height="6" x="0" fill="#0055A4" />
-      <rect width="3" height="6" x="3" fill="#fff" />
-      <rect width="3" height="6" x="6" fill="#EF4135" />
-    </svg>
-  )
-}
-
-// Sør-koreansk flagg (taegukgi). Forenklet for 14px: hvit bakgrunn med
-// taeguk (yin-yang) i sentrum — rødt øverst, blått nederst, S-formet skille.
-// Trigrammene i hjørnene er for små til å være lesbare og droppes for å
-// beholde gjenkjennelighet.
-function FlagKO() {
-  return (
-    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
-      <rect width="30" height="20" fill="#fff" stroke="#ccc" strokeWidth="0.3" />
-      {/* Hele taeguk-sirkelen som rødt grunnlag */}
-      <circle cx="15" cy="10" r="5" fill="#C60C30" />
-      {/* Nedre halvdel som blå (overstyrer rødt under midt-linja) */}
-      <path d="M10 10 a5 5 0 0 0 10 0 z" fill="#003478" />
-      {/* S-skillet: blå halvsirkel pa hoyre side av midtlinja */}
-      <path d="M15 10 a2.5 2.5 0 0 1 5 0 a2.5 2.5 0 0 0 -5 0 z" fill="#003478" />
-      {/* S-skillet: rod halvsirkel pa venstre side av midtlinja */}
-      <path d="M10 10 a2.5 2.5 0 0 0 5 0 a2.5 2.5 0 0 1 -5 0 z" fill="#C60C30" />
-    </svg>
-  )
-}
-
-// Forenklet Saudi-arabisk flagg — brukes som standard "arabisk språk"-flagg
-// i web-kontekst. Grønn bakgrunn med hvitt arabisk skrift-element (forenklet
-// horisontal strek under feltet for shahada) og forenklet sverd. Vi unngår
-// faktisk shahada-tekst av respekt — den skal ikke vises på 14px.
-function FlagAR() {
-  return (
-    <svg viewBox="0 0 22 14" width="20" height="14" aria-hidden="true">
-      <rect width="22" height="14" fill="#006C35" />
-      <rect x="3" y="5" width="16" height="0.6" fill="#fff" />
-      <rect x="3" y="7.5" width="13" height="0.4" fill="#fff" />
-      <path
-        d="M3 10 L19 10"
-        stroke="#fff"
-        strokeWidth="0.3"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+const flagProps = { width: 24, height: 17, 'aria-hidden': true }
 
 const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }> = {
-  en: { flag: FlagGB, name: 'English' },
-  nb: { flag: FlagNO, name: 'Norsk' },
-  de: { flag: FlagDE, name: 'Deutsch' },
-  ru: { flag: FlagRU, name: 'Русский' },
-  pl: { flag: FlagPL, name: 'Polski' },
-  ar: { flag: FlagAR, name: 'العربية' },
-  fr: { flag: FlagFR, name: 'Français' },
-  es: { flag: FlagES, name: 'Español' },
-  tr: { flag: FlagTR, name: 'Türkçe' },
-  ja: { flag: FlagJA, name: '日本語' },
-  ko: { flag: FlagKO, name: '한국어' },
+  en: { flag: () => <GB {...flagProps} />, name: 'English' },
+  nb: { flag: () => <NO {...flagProps} />, name: 'Norsk' },
+  de: { flag: () => <DE {...flagProps} />, name: 'Deutsch' },
+  ru: { flag: () => <RU {...flagProps} />, name: 'Русский' },
+  pl: { flag: () => <PL {...flagProps} />, name: 'Polski' },
+  ar: { flag: () => <SA {...flagProps} />, name: 'العربية' },
+  fr: { flag: () => <FR {...flagProps} />, name: 'Français' },
+  es: { flag: () => <ES {...flagProps} />, name: 'Español' },
+  tr: { flag: () => <TR {...flagProps} />, name: 'Türkçe' },
+  ja: { flag: () => <JP {...flagProps} />, name: '日本語' },
+  ko: { flag: () => <KR {...flagProps} />, name: '한국어' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
@@ -177,6 +57,28 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdown on click/touch outside, and on Escape key.
+  useEffect(() => {
+    if (!open) return
+    function handlePointer(e: MouseEvent | TouchEvent) {
+      if (!containerRef.current?.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', handlePointer)
+    document.addEventListener('touchstart', handlePointer)
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      document.removeEventListener('mousedown', handlePointer)
+      document.removeEventListener('touchstart', handlePointer)
+      document.removeEventListener('keydown', handleKey)
+    }
+  }, [open])
 
   // Persist override so a returning visitor keeps their choice even if they
   // arrive via a link that specifies a different language.
@@ -208,7 +110,7 @@ export default function LanguageSwitcher({ current }: { current: LangCode }) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={containerRef}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
