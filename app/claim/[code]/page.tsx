@@ -142,23 +142,31 @@ export default async function ClaimPage({ params, searchParams }: Props) {
 
       {/* Content */}
       <div className="w-full max-w-3xl px-4 py-8 flex flex-col gap-6">
-        {/* Stats card */}
+        {/* Stats card. flex-1 på hver Stat gjør at de tar nøyaktig 50% hver og
+            sentreres innenfor sin egen halvdel. Tidligere brukte vi
+            justify-around som ga ulik visuell plassering når labels var ulike
+            lengder — ELO (3 tegn) ser asymmetrisk ut ved siden av "Matches
+            played" (lengre). */}
         <div
-          className="rounded-2xl p-6 flex items-center justify-around gap-4"
+          className="rounded-2xl p-6 flex items-center gap-4"
           style={{
             background: '#1E1B2E',
             border: '1px solid rgba(184,90,255,0.12)',
           }}
         >
-          <Stat label={t.claim.eloLabel} value={claim.guest_elo.toString()} />
+          <div className="flex-1 flex justify-center">
+            <Stat label={t.claim.eloLabel} value={claim.guest_elo.toString()} />
+          </div>
           <div
             className="h-10 w-px"
             style={{ background: 'rgba(184,90,255,0.18)' }}
           />
-          <Stat
-            label={t.claim.matchesPlayedLabel(claim.guest_total_games)}
-            value={claim.guest_total_games.toString()}
-          />
+          <div className="flex-1 flex justify-center">
+            <Stat
+              label={t.claim.matchesPlayedLabel(claim.guest_total_games)}
+              value={claim.guest_total_games.toString()}
+            />
+          </div>
         </div>
 
         {/* Explainer — ingen avatar her, fordi gjestespillere alltid mangler

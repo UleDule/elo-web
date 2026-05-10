@@ -42,7 +42,10 @@ export default async function PosterPage({ params, searchParams }: Props) {
   })
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white print:p-0">
+    <div
+      className="min-h-screen flex items-center justify-center bg-white print:p-0"
+      dir={lang === 'ar' ? 'rtl' : 'ltr'}
+    >
       <PrintButton />
 
       <div className="flex flex-col items-center text-center text-black">
