@@ -11,10 +11,11 @@ import { ar } from '@/app/i18n/dictionaries/ar'
 import { fr } from '@/app/i18n/dictionaries/fr'
 import { es } from '@/app/i18n/dictionaries/es'
 import { tr } from '@/app/i18n/dictionaries/tr'
+import { ja } from '@/app/i18n/dictionaries/ja'
 import { isSupportedLang } from '@/app/i18n/types'
 import type { Dictionary, LangCode } from '@/app/i18n/types'
 
-const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr }
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja }
 
 const SIZE = { width: 1200, height: 630 }
 
@@ -49,6 +50,12 @@ export async function GET(
     ? await readFile(join(process.cwd(), 'public', 'fonts', 'Cairo-Bold.ttf'))
     : null
 
+  // Noto Sans JP for Japanese — system sans-serif has no Japanese glyphs in
+  // Satori, same problem as Arabic. 2.3MB but necessary for kanji coverage.
+  const japaneseFont = lang === 'ja'
+    ? await readFile(join(process.cwd(), 'public', 'fonts', 'NotoSansJP-Bold.ttf'))
+    : null
+
   return new ImageResponse(
     (
       <div
@@ -62,7 +69,12 @@ export async function GET(
           backgroundImage:
             'radial-gradient(circle at 30% 50%, #4A1F8C 0%, #1A0B33 60%)',
           color: 'white',
-          fontFamily: lang === 'ar' ? 'Cairo, sans-serif' : 'sans-serif',
+          fontFamily:
+            lang === 'ar'
+              ? 'Cairo, sans-serif'
+              : lang === 'ja'
+                ? 'NotoSansJP, sans-serif'
+                : 'sans-serif',
           padding: '60px 80px',
         }}
       >
@@ -219,7 +231,16 @@ export async function GET(
               style: 'normal',
             },
           ]
-        : undefined,
+        : japaneseFont
+          ? [
+              {
+                name: 'NotoSansJP',
+                data: japaneseFont,
+                weight: 700,
+                style: 'normal',
+              },
+            ]
+          : undefined,
     },
   )
 }

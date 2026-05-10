@@ -71,9 +71,9 @@ export type Dictionary = {
   }
 }
 
-export type LangCode = 'en' | 'nb' | 'de' | 'ru' | 'pl' | 'ar' | 'fr' | 'es' | 'tr'
+export type LangCode = 'en' | 'nb' | 'de' | 'ru' | 'pl' | 'ar' | 'fr' | 'es' | 'tr' | 'ja'
 
-export const SUPPORTED_LANGS: LangCode[] = ['en', 'nb', 'de', 'ru', 'pl', 'ar', 'fr', 'es', 'tr']
+export const SUPPORTED_LANGS: LangCode[] = ['en', 'nb', 'de', 'ru', 'pl', 'ar', 'fr', 'es', 'tr', 'ja']
 export const DEFAULT_LANG: LangCode = 'en'
 
 export function isSupportedLang(

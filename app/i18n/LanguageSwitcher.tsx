@@ -61,6 +61,16 @@ function FlagPL() {
   )
 }
 
+// Japansk flagg (hvit bakgrunn, rød sol-disk i midten).
+function FlagJA() {
+  return (
+    <svg viewBox="0 0 30 20" width="20" height="14" aria-hidden="true">
+      <rect width="30" height="20" fill="#fff" stroke="#ccc" strokeWidth="0.3" />
+      <circle cx="15" cy="10" r="6" fill="#BC002D" />
+    </svg>
+  )
+}
+
 // Tyrkisk flagg (rødt med hvit halvmåne og stjerne). Forenklet — bare halvmåne
 // og rød bakgrunn er gjenkjennelig nok på 14px.
 function FlagTR() {
@@ -125,6 +135,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   fr: { flag: FlagFR, name: 'Français' },
   es: { flag: FlagES, name: 'Español' },
   tr: { flag: FlagTR, name: 'Türkçe' },
+  ja: { flag: FlagJA, name: '日本語' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
