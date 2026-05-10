@@ -22,6 +22,7 @@ import ES from 'country-flag-icons/react/3x2/ES'
 import TR from 'country-flag-icons/react/3x2/TR'
 import JP from 'country-flag-icons/react/3x2/JP'
 import KR from 'country-flag-icons/react/3x2/KR'
+import VN from 'country-flag-icons/react/3x2/VN'
 
 const flagProps = { width: 24, height: 17, 'aria-hidden': true }
 
@@ -37,6 +38,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   tr: { flag: () => <TR {...flagProps} />, name: 'Türkçe' },
   ja: { flag: () => <JP {...flagProps} />, name: '日本語' },
   ko: { flag: () => <KR {...flagProps} />, name: '한국어' },
+  vi: { flag: () => <VN {...flagProps} />, name: 'Tiếng Việt' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
@@ -45,9 +47,14 @@ const STORAGE_KEY = 'elorankings.lang'
 // finner sitt eget språk), så resten alfabetisk på lokalt navn (Deutsch,
 // English, Español, ...). Bevisst forskjellig fra SUPPORTED_LANGS som er
 // teknisk rekkefølge.
+//
+// Eksplisitt 'en' locale på localeCompare for å få konsistent rekkefølge på
+// tvers av enheter. Uten argument bruker localeCompare brukerens system-
+// locale, som gir forskjellig CJK-plassering på PC vs mobil — vi vil at
+// alle ser samme rekkefølge uansett.
 const DISPLAY_ORDER: LangCode[] = (() => {
   const rest = SUPPORTED_LANGS.filter((l) => l !== 'en').sort((a, b) =>
-    LABELS[a].name.localeCompare(LABELS[b].name),
+    LABELS[a].name.localeCompare(LABELS[b].name, 'en'),
   )
   return ['en', ...rest]
 })()
