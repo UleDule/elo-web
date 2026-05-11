@@ -26,6 +26,7 @@ import VN from 'country-flag-icons/react/3x2/VN'
 import UA from 'country-flag-icons/react/3x2/UA'
 import IT from 'country-flag-icons/react/3x2/IT'
 import BR from 'country-flag-icons/react/3x2/BR'
+import ID from 'country-flag-icons/react/3x2/ID'
 
 const flagProps = { width: 24, height: 17, 'aria-hidden': true }
 
@@ -45,6 +46,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   uk: { flag: () => <UA {...flagProps} />, name: 'Українська' },
   it: { flag: () => <IT {...flagProps} />, name: 'Italiano' },
   pt: { flag: () => <BR {...flagProps} />, name: 'Português' },
+  id: { flag: () => <ID {...flagProps} />, name: 'Bahasa Indonesia' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
