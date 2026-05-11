@@ -46,7 +46,7 @@ const LABELS: Record<LangCode, { flag: () => React.ReactElement; name: string }>
   uk: { flag: () => <UA {...flagProps} />, name: 'Українська' },
   it: { flag: () => <IT {...flagProps} />, name: 'Italiano' },
   pt: { flag: () => <BR {...flagProps} />, name: 'Português' },
-  id: { flag: () => <ID {...flagProps} />, name: 'Bahasa Indonesia' },
+  id: { flag: () => <ID {...flagProps} />, name: 'Indonesia' },
 }
 
 const STORAGE_KEY = 'elorankings.lang'
