@@ -13,10 +13,11 @@ import { ja } from './dictionaries/ja'
 import { ko } from './dictionaries/ko'
 import { vi } from './dictionaries/vi'
 import { uk } from './dictionaries/uk'
+import { it } from './dictionaries/it'
 import type { Dictionary, LangCode } from './types'
 import { DEFAULT_LANG, isSupportedLang } from './types'
 
-const dictionaries: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja, ko, vi, uk }
+const dictionaries: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja, ko, vi, uk, it }
 
 /**
  * Resolve the user's preferred language with this priority:
