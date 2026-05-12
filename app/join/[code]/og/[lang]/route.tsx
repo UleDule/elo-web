@@ -18,10 +18,11 @@ import { uk } from '@/app/i18n/dictionaries/uk'
 import { it } from '@/app/i18n/dictionaries/it'
 import { pt } from '@/app/i18n/dictionaries/pt'
 import { id } from '@/app/i18n/dictionaries/id'
+import { sq } from '@/app/i18n/dictionaries/sq'
 import { isSupportedLang } from '@/app/i18n/types'
 import type { Dictionary, LangCode } from '@/app/i18n/types'
 
-const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja, ko, vi, uk, it, pt, id }
+const dicts: Record<LangCode, Dictionary> = { en, nb, de, ru, pl, ar, fr, es, tr, ja, ko, vi, uk, it, pt, id, sq }
 
 const SIZE = { width: 1200, height: 630 }
 
