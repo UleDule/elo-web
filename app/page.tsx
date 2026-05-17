@@ -52,7 +52,8 @@ export default async function Home() {
             />
           </div>
           <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center max-w-xl mx-auto">
-            Ping pong at the office. Chess with friends. FIFA on the couch. Or whatever your group plays.
+            Ping pong at the office. Chess with friends. FIFA on the couch.
+            <span className="block mt-1">Or whatever your group plays.</span>
           </p>
 
           {/* CTA: Desktop = QR + buttons side by side, Mobile = buttons only */}
@@ -121,16 +122,6 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Proof row */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-xs sm:text-sm text-[#9B95A8]">
-            <span>Free, no ads</span>
-            <span className="opacity-30">·</span>
-            <span>17 languages</span>
-            <span className="opacity-30">·</span>
-            <span>iOS &amp; Android</span>
-            <span className="opacity-30">·</span>
-            <span>Works offline</span>
-          </div>
         </div>
       </section>
 
