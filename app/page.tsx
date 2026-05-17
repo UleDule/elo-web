@@ -12,22 +12,21 @@ export default async function Home() {
   })
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div
+      className="min-h-screen flex flex-col relative"
+      style={{
+        background:
+          'radial-gradient(ellipse 80% 60% at 50% 0%, #2D1B69 0%, transparent 70%), linear-gradient(180deg, #181622 0%, #1A1428 100%)',
+      }}
+    >
       {/* Hero */}
       <section className="relative w-full px-4 pt-16 pb-20 overflow-hidden">
-        {/* Background */}
+        {/* Purple accent glow — scoped to hero */}
         <div
-          className="absolute inset-0"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{
             background:
-              'linear-gradient(135deg, #181622 0%, #2D1B69 50%, #181622 100%)',
-          }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(184,90,255,0.15) 0%, transparent 70%)',
+              'radial-gradient(circle, rgba(184,90,255,0.18) 0%, transparent 70%)',
           }}
         />
         <div
@@ -53,7 +52,7 @@ export default async function Home() {
             />
           </div>
           <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center max-w-xl mx-auto">
-            Fair ELO-based rankings for any game your group plays.
+            Ping pong at the office. Chess with friends. FIFA on the couch. Or whatever your group plays.
           </p>
 
           {/* CTA: Desktop = QR + buttons side by side, Mobile = buttons only */}
@@ -121,27 +120,46 @@ export default async function Home() {
               </a>
             </div>
           </div>
+
+          {/* Proof row */}
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-xs sm:text-sm text-[#9B95A8]">
+            <span>Free, no ads</span>
+            <span className="opacity-30">·</span>
+            <span>17 languages</span>
+            <span className="opacity-30">·</span>
+            <span>iOS &amp; Android</span>
+            <span className="opacity-30">·</span>
+            <span>Works offline</span>
+          </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="w-full max-w-4xl mx-auto px-4 py-20">
-        <h2 className="text-2xl font-bold text-white text-center mb-12">
+      <section className="relative w-full max-w-4xl mx-auto px-4 py-20">
+        {/* Subtle accent glow for continuity */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(184,90,255,0.06) 0%, transparent 70%)',
+          }}
+        />
+        <h2 className="relative text-2xl font-bold text-white text-center mb-12">
           Everything you need to settle the score
         </h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="relative grid md:grid-cols-3 gap-4">
           <FeatureCard
-            icon={<ChartIcon />}
+            icon={<TrophyIcon />}
             title="Fair Rankings"
             description="The ELO system adapts to opponent strength. Beat a top player, climb faster."
           />
           <FeatureCard
-            icon={<GridIcon />}
+            icon={<ScoreboardsIcon />}
             title="Any Game, Any Group"
             description="Create separate scoreboards for every game. Office ping-pong, family chess, dorm FIFA."
           />
           <FeatureCard
-            icon={<ShareIcon />}
+            icon={<QrIcon />}
             title="Invite in Seconds"
             description="Share a link or print a QR poster. Anyone can join and start competing."
           />
@@ -235,8 +253,13 @@ function FeatureCard({
       }}
     >
       <div
-        className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center transition-colors group-hover:shadow-[0_0_20px_rgba(184,90,255,0.3)]"
-        style={{ background: 'rgba(184,90,255,0.1)', color: '#B85AFF' }}
+        className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center transition-all group-hover:shadow-[0_0_28px_rgba(184,90,255,0.45)] group-hover:scale-110"
+        style={{
+          background:
+            'linear-gradient(135deg, rgba(184,90,255,0.18) 0%, rgba(255,90,184,0.12) 100%)',
+          border: '1px solid rgba(184,90,255,0.25)',
+          color: '#D4AAFF',
+        }}
       >
         {icon}
       </div>
@@ -264,58 +287,29 @@ function PlayIcon() {
   )
 }
 
-function ChartIcon() {
+function TrophyIcon() {
   return (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 3v18h18" />
-      <path d="M18 9l-5 5-4-4-3 3" />
+    <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v2c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-2.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 13.63 21 11.55 21 9V7c0-1.1-.9-2-2-2zM5 9V7h2v3.82C5.84 10.4 5 9.3 5 9zm14 0c0 .3-.84 1.4-2 1.82V7h2v2z" />
     </svg>
   )
 }
 
-function GridIcon() {
+function ScoreboardsIcon() {
   return (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="3" width="7" height="7" />
-      <rect x="14" y="3" width="7" height="7" />
-      <rect x="3" y="14" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" />
+    <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="3" y="3" width="8" height="8" rx="1.8" />
+      <rect x="13" y="3" width="8" height="8" rx="1.8" opacity="0.55" />
+      <rect x="3" y="13" width="8" height="8" rx="1.8" opacity="0.55" />
+      <rect x="13" y="13" width="8" height="8" rx="1.8" />
     </svg>
   )
 }
 
-function ShareIcon() {
+function QrIcon() {
   return (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="18" cy="5" r="3" />
-      <circle cx="6" cy="12" r="3" />
-      <circle cx="18" cy="19" r="3" />
-      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+    <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8 0h2v2h-2v-2zm0 4h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm-2-2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v4h-2v-4z" />
     </svg>
   )
 }
