@@ -51,7 +51,7 @@ export default async function Home() {
               }}
             />
           </div>
-          <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center max-w-xl mx-auto">
+          <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center max-w-3xl mx-auto">
             Ping pong at the office. Chess with friends. FIFA on the couch.
             <span className="block mt-1">Or whatever your group plays.</span>
           </p>
@@ -145,9 +145,9 @@ export default async function Home() {
             description="The ELO system adapts to opponent strength. Beat a top player, climb faster."
           />
           <FeatureCard
-            icon={<ScoreboardsIcon />}
-            title="Any Game, Any Group"
-            description="Create separate scoreboards for every game. Office ping-pong, family chess, dorm FIFA."
+            icon={<DoublesIcon />}
+            title="Singles or Doubles"
+            description="1v1 or 2v2, each with its own ELO. Track every match the way you actually play."
           />
           <FeatureCard
             icon={<QrIcon />}
@@ -286,13 +286,15 @@ function TrophyIcon() {
   )
 }
 
-function ScoreboardsIcon() {
+function DoublesIcon() {
   return (
     <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-      <rect x="3" y="3" width="8" height="8" rx="1.8" />
-      <rect x="13" y="3" width="8" height="8" rx="1.8" opacity="0.55" />
-      <rect x="3" y="13" width="8" height="8" rx="1.8" opacity="0.55" />
-      <rect x="13" y="13" width="8" height="8" rx="1.8" />
+      <circle cx="5" cy="8" r="2.5" />
+      <circle cx="10" cy="8" r="2.5" />
+      <circle cx="14" cy="8" r="2.5" opacity="0.5" />
+      <circle cx="19" cy="8" r="2.5" opacity="0.5" />
+      <rect x="2" y="13" width="9.5" height="5.5" rx="2.5" />
+      <rect x="12.5" y="13" width="9.5" height="5.5" rx="2.5" opacity="0.5" />
     </svg>
   )
 }
