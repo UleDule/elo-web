@@ -191,7 +191,7 @@ export default async function Home() {
           >
             <Image
               src="/screenshots/3.png"
-              alt="Register a match between two players"
+              alt="Overview of your scoreboards with top-three podiums"
               width={220}
               height={476}
               className="w-full h-auto"

@@ -53,7 +53,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="text-sm text-[#9B95A8]">
-            Last updated: July 2025
+            Last updated: May 2026
           </p>
         </div>
       </section>
@@ -61,60 +61,93 @@ export default function PrivacyPage() {
       {/* Content */}
       <section className="w-full max-w-3xl mx-auto px-4 py-16 flex flex-col gap-6">
         <PolicyCard title="What information we collect">
-          <p className="mb-3">When you sign in with Google, we receive:</p>
+          <p className="mb-3">When you sign in with Google or Apple, we receive:</p>
           <ul className="list-disc list-inside space-y-1 mb-4">
             <li>Your email address</li>
-            <li>Your name</li>
-            <li>Your Google profile ID</li>
+            <li>Your name (when provided by the sign-in provider)</li>
+            <li>A unique provider account ID used to recognize you on return visits</li>
           </ul>
-          <p className="mb-3">When you use the app, you create:</p>
+          <p className="mb-3">When you sign up with email and password, we store your email address and a securely hashed password.</p>
+          <p className="mb-3">When you use the app, the following may be created or stored:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Game results and ELO ratings</li>
-            <li>Profile picture (optional, uploaded manually)</li>
+            <li>Profile information: display name, optional country, profile picture (optional, uploaded manually)</li>
+            <li>App language preference, derived from your device locale at sign-up</li>
+            <li>Scoreboards you create or join, including invited members and guest players</li>
+            <li>Match results, ELO ratings, and per-match ELO history</li>
+            <li>Doubles (2v2) team results, head-to-head statistics</li>
+            <li>Chat messages you send inside a scoreboard</li>
+            <li>In-app notifications (invitations, match events)</li>
+            <li>Anonymous usage signals used to decide when to prompt for an app rating</li>
           </ul>
         </PolicyCard>
 
         <PolicyCard title="How we use your information">
           <p className="mb-3">We use this information only to:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Identify your account</li>
-            <li>Display your profile in the app</li>
-            <li>Track your game statistics</li>
-            <li>Calculate ELO ratings</li>
+            <li>Identify your account and let you sign back in</li>
+            <li>Display your profile and statistics inside the app</li>
+            <li>Calculate ELO ratings and synchronize scoreboards in real time across devices</li>
+            <li>Deliver invitations and notifications related to your scoreboards</li>
+            <li>Improve the product based on aggregate, non-identifying usage patterns</li>
           </ul>
+          <p className="mt-3">We do not sell your data, do not run third-party advertising, and do not use your data for profiling outside the app.</p>
         </PolicyCard>
 
-        <PolicyCard title="Data storage & deletion">
+        <PolicyCard title="Third-party services">
+          <p className="mb-3">ELO Rankings relies on the following processors to deliver core functionality:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Your data is stored securely using Supabase</li>
-            <li>We never share or sell your data</li>
-            <li>You can delete your profile picture at any time</li>
-            <li>For account deletion, please contact us (note: game history shared with other users will be retained)</li>
+            <li><strong>Supabase</strong> &mdash; authentication, database, real-time sync, file storage</li>
+            <li><strong>Google Sign-In</strong> and <strong>Apple Sign In</strong> &mdash; optional account providers</li>
+            <li><strong>Resend</strong> &mdash; transactional emails (invitations, account-related messages)</li>
+            <li><strong>Apple App Store</strong> and <strong>Google Play</strong> &mdash; app distribution and crash reporting</li>
+          </ul>
+          <p className="mt-3">Each provider processes only the data necessary for its function and is bound by its own privacy terms.</p>
+        </PolicyCard>
+
+        <PolicyCard title="Data storage & retention">
+          <ul className="list-disc list-inside space-y-1">
+            <li>Data is stored on Supabase infrastructure inside the EU (eu-north-1)</li>
+            <li>Offline scoreboards (created without signing in) stay on your device only and are never sent to our servers</li>
+            <li>You can change or remove your profile picture at any time</li>
+            <li>If you delete your account, your profile and personal data are removed, but match results and ELO history shared with other scoreboard members may be retained so their statistics remain consistent</li>
           </ul>
         </PolicyCard>
 
-        <PolicyCard title="Delete your account">
-          <p className="mb-3">To delete your ELO Rankings account and all associated data:</p>
-          <p className="mb-3">
-            Please send an email to{' '}
+        <PolicyCard title="Your rights">
+          <p className="mb-3">Under GDPR and similar regulations, you have the right to:</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Access the personal data we hold about you</li>
+            <li>Correct inaccurate data (most fields are editable directly in the app)</li>
+            <li>Request deletion of your account and personal data</li>
+            <li>Receive a copy of your data in a portable format</li>
+            <li>Object to or restrict processing</li>
+          </ul>
+          <p className="mt-3">
+            To exercise any of these rights, email{' '}
             <a
               href="mailto:contact.nordicworks@gmail.com"
               className="text-[#B85AFF] hover:underline"
             >
               contact.nordicworks@gmail.com
             </a>
+            . We respond within 30 days.
           </p>
-          <p className="mb-3">Include:</p>
+        </PolicyCard>
+
+        <PolicyCard title="Delete your account">
+          <p className="mb-3">You can delete your ELO Rankings account directly in the app: open your profile, scroll to the bottom, and tap <strong>Delete Account</strong>. Deletion is processed automatically and confirmed on screen.</p>
+          <p className="mb-3">If you cannot access the app, you can request deletion by email instead:</p>
           <ul className="list-disc list-inside space-y-1 mb-4">
-            <li>Your registered email address</li>
-            <li>&quot;Delete my account&quot; in the subject line</li>
+            <li>Send an email to <a href="mailto:contact.nordicworks@gmail.com" className="text-[#B85AFF] hover:underline">contact.nordicworks@gmail.com</a></li>
+            <li>Use the subject &quot;Delete my account&quot;</li>
+            <li>Include your registered email address</li>
           </ul>
-          <p>We will delete your account within 72 hours and send confirmation.</p>
+          <p>Email-based deletion is processed within 72 hours and confirmed by reply.</p>
         </PolicyCard>
 
         <PolicyCard title="Contact">
           <p>
-            For questions or other inquiries:{' '}
+            For privacy questions or other inquiries:{' '}
             <a
               href="mailto:contact.nordicworks@gmail.com"
               className="text-[#B85AFF] hover:underline"

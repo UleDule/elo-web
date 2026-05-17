@@ -69,31 +69,47 @@ export default function SupportPage() {
             answer="The ELO system calculates fair ratings based on match results. When a lower-rated player beats a higher-rated player, they gain more points. This means rankings reflect true skill, not just how many games you've played."
           />
           <FaqCard
+            question="Does the app support doubles (2v2)?"
+            answer="Yes. You can register 2v2 matches and each team gets its own ELO rating, separate from singles ratings on the same scoreboard."
+          />
+          <FaqCard
             question="Can I have multiple scoreboards?"
-            answer="Yes! You can create unlimited offline scoreboards and join multiple online scoreboards. Perfect for tracking different games or groups separately."
+            answer="Yes. You can create as many scoreboards as you like for different games or groups. Offline scoreboards are unlimited and stay on your device. Online scoreboards sync across devices and let you invite other people."
+          />
+          <FaqCard
+            question="How do I invite people to my scoreboard?"
+            answer={
+              <>
+                Open the scoreboard, tap the share icon, and choose between a QR code or a link. Anyone who scans or opens the link is taken straight to the scoreboard, even if they don&apos;t have the app installed yet.
+              </>
+            }
+          />
+          <FaqCard
+            question="I was added as a guest. Can I claim my profile?"
+            answer="Yes. If an admin added you as a guest player, you can claim that profile by signing up with your email. Your existing matches, wins, and ELO history are kept and tied to your new account."
+          />
+          <FaqCard
+            question="What languages does the app support?"
+            answer="ELO Rankings is available in 17 languages. The app picks the language from your device settings automatically, and you can change it manually under Settings."
           />
           <FaqCard
             question="Is my data secure?"
-            answer="Your data is stored securely using Supabase with row-level security. We never share or sell your data. Offline scoreboards are stored locally on your device only."
+            answer="Your data is stored securely on Supabase infrastructure inside the EU with row-level security. We never share or sell your data. Offline scoreboards are stored locally on your device only."
           />
           <FaqCard
             question="How do I delete my account?"
             answer={
               <>
-                Go to your profile in the app and tap <strong>Delete Account</strong>. This will permanently remove your account and all associated data. Alternatively, email us at{' '}
+                Go to your profile in the app and tap <strong>Delete Account</strong>. This will permanently remove your account and personal data. Match results and ELO history shared with other scoreboard members may be retained so their statistics stay consistent. If you cannot access the app, email{' '}
                 <a
                   href="mailto:contact.nordicworks@gmail.com"
                   className="text-[#B85AFF] hover:underline"
                 >
                   contact.nordicworks@gmail.com
                 </a>{' '}
-                with the subject &quot;Delete my account&quot; and include your registered email.
+                with the subject &quot;Delete my account&quot; and your registered email.
               </>
             }
-          />
-          <FaqCard
-            question="Does the app support team sports?"
-            answer="Currently, ELO Rankings supports 1v1 competitions only. Team support may be added in future updates."
           />
           <FaqCard
             question="The app isn't working properly. What should I do?"
