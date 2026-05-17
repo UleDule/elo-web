@@ -36,37 +36,23 @@ export default async function Home() {
         />
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Logo */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <div
-              className="rounded-2xl p-2"
-              style={{ background: 'rgba(184,90,255,0.08)' }}
-            >
-              <img
-                src="/logo/TrofeTransparens.png"
-                alt="ELO Rankings"
-                width={72}
-                height={72}
-                className="drop-shadow-[0_0_32px_rgba(184,90,255,0.8)]"
-              />
-            </div>
-            <span
-              className="text-4xl font-extrabold tracking-tight"
+          {/* Hero banner — promo art replaces logo + wordmark + tagline */}
+          <h1 className="sr-only">ELO Rankings — Settle the score</h1>
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/promoart/hero.png"
+              alt="ELO Rankings — Settle the score"
+              width={1024}
+              height={500}
+              priority
+              className="w-full max-w-2xl h-auto rounded-2xl"
               style={{
-                background: 'linear-gradient(135deg, #fff 0%, #B85AFF 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                boxShadow:
+                  '0 25px 60px -12px rgba(184,90,255,0.25), 0 0 40px -8px rgba(184,90,255,0.15)',
               }}
-            >
-              ELO Rankings
-            </span>
+            />
           </div>
-
-          {/* Tagline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-tight text-center">
-            Settle the score
-          </h1>
-          <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center">
+          <p className="text-lg sm:text-xl text-[#9B95A8] mb-12 text-center max-w-xl mx-auto">
             Fair ELO-based rankings for any game your group plays.
           </p>
 
@@ -164,13 +150,13 @@ export default async function Home() {
 
       {/* Screenshots */}
       <section className="w-full max-w-4xl mx-auto px-4 pb-24">
-        <div className="flex justify-center items-end gap-6 sm:gap-12">
+        <div className="flex justify-center items-end gap-2 sm:gap-6">
+          {/* Left — leaderboard */}
           <div
-            className="rounded-[2rem] overflow-hidden ring-1 ring-white/10 transition-transform hover:scale-[1.02]"
+            className="rounded-[2rem] overflow-hidden ring-1 ring-white/10 transition-transform hover:scale-[1.04] w-[120px] sm:w-[180px] -rotate-6 translate-y-4"
             style={{
               boxShadow:
                 '0 25px 60px -12px rgba(184,90,255,0.2), 0 0 40px -8px rgba(184,90,255,0.1)',
-              transform: 'rotate(-3deg)',
             }}
           >
             <Image
@@ -181,12 +167,28 @@ export default async function Home() {
               className="w-full h-auto"
             />
           </div>
+          {/* Center — match registration (focal point) */}
           <div
-            className="rounded-[2rem] overflow-hidden ring-1 ring-white/10 transition-transform hover:scale-[1.02]"
+            className="rounded-[2rem] overflow-hidden ring-1 ring-white/10 transition-transform hover:scale-[1.04] w-[150px] sm:w-[220px] relative z-10"
+            style={{
+              boxShadow:
+                '0 30px 70px -12px rgba(184,90,255,0.3), 0 0 50px -8px rgba(184,90,255,0.18)',
+            }}
+          >
+            <Image
+              src="/screenshots/2.png"
+              alt="Register a singles or doubles match in two taps"
+              width={220}
+              height={476}
+              className="w-full h-auto"
+            />
+          </div>
+          {/* Right — scoreboard overview */}
+          <div
+            className="rounded-[2rem] overflow-hidden ring-1 ring-white/10 transition-transform hover:scale-[1.04] w-[120px] sm:w-[180px] rotate-6 translate-y-4"
             style={{
               boxShadow:
                 '0 25px 60px -12px rgba(184,90,255,0.2), 0 0 40px -8px rgba(184,90,255,0.1)',
-              transform: 'rotate(3deg)',
             }}
           >
             <Image
