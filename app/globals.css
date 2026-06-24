@@ -23,3 +23,15 @@ body {
   color: var(--color-text);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+/* Utskrift: nøytraliser tvungne full-høyder (h-full / min-h-full / min-h-screen)
+   slik at innholdet ikke flyter over på en blank side 2, og tving hvit
+   bakgrunn så den mørke app-bakgrunnen ikke skrives ut. */
+@media print {
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    background: #fff !important;
+  }
+}
