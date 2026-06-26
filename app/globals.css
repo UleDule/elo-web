@@ -24,14 +24,15 @@ body {
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Utskrift: nøytraliser tvungne full-høyder (h-full / min-h-full / min-h-screen)
-   slik at innholdet ikke flyter over på en blank side 2, og tving hvit
-   bakgrunn så den mørke app-bakgrunnen ikke skrives ut. */
+/* Utskrift: gi html/body en DEFINERT sidehøyde (height: 100% = selve arket i
+   print, i motsetning til 100vh som mapper til skjermen og gir en blank side 2).
+   Da kan plakaten fylle nøyaktig ett ark og sentrere innholdet vertikalt i
+   stedet for å presses opp i toppen. Pluss hvit bakgrunn så den mørke
+   app-bakgrunnen ikke skrives ut. */
 @media print {
   html,
   body {
-    height: auto !important;
-    min-height: 0 !important;
+    height: 100%;
     background: #fff !important;
   }
 }
