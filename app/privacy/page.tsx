@@ -53,7 +53,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="text-sm text-[#9B95A8]">
-            Last updated: May 2026
+            Last updated: November 2026
           </p>
         </div>
       </section>
@@ -76,9 +76,18 @@ export default function PrivacyPage() {
             <li>Match results, ELO ratings, and per-match ELO history</li>
             <li>Doubles (2v2) team results, head-to-head statistics</li>
             <li>Chat messages you send inside a scoreboard</li>
+            <li>Match notes you write (Premium)</li>
             <li>In-app notifications (invitations, match events)</li>
+            <li>A push notification token for your device, your notification preferences, and the app language, if you allow push notifications</li>
             <li>Anonymous usage signals used to decide when to prompt for an app rating</li>
           </ul>
+          <p className="mt-4 mb-3">If you buy Premium, we also store purchase information linked to your account:</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Which product you bought (monthly subscription or lifetime)</li>
+            <li>Purchase, renewal and expiry dates, whether it is a free trial, and whether the subscription will renew</li>
+            <li>Price and currency, and which store the purchase was made in</li>
+          </ul>
+          <p className="mt-3">Payments are handled entirely by Apple or Google. We never see or store your card or other payment details.</p>
         </PolicyCard>
 
         <PolicyCard title="How we use your information">
@@ -88,6 +97,7 @@ export default function PrivacyPage() {
             <li>Display your profile and statistics inside the app</li>
             <li>Calculate ELO ratings and synchronize scoreboards in real time across devices</li>
             <li>Deliver invitations and notifications related to your scoreboards</li>
+            <li>Unlock Premium features, show your plan and renewal date, and handle restores of earlier purchases</li>
             <li>Improve the product based on aggregate, non-identifying usage patterns</li>
           </ul>
           <p className="mt-3">We do not sell your data, do not run third-party advertising, and do not use your data for profiling outside the app.</p>
@@ -96,10 +106,12 @@ export default function PrivacyPage() {
         <PolicyCard title="Third-party services">
           <p className="mb-3">ELO Rankings relies on the following processors to deliver core functionality:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li><strong>Supabase</strong> &mdash; authentication, database, real-time sync, file storage</li>
-            <li><strong>Google Sign-In</strong> and <strong>Apple Sign In</strong> &mdash; optional account providers</li>
-            <li><strong>Resend</strong> &mdash; transactional emails (invitations, account-related messages)</li>
-            <li><strong>Apple App Store</strong> and <strong>Google Play</strong> &mdash; app distribution and crash reporting</li>
+            <li><strong>Supabase</strong>: authentication, database, real-time sync, file storage</li>
+            <li><strong>Google Sign-In</strong> and <strong>Apple Sign In</strong>: optional account providers</li>
+            <li><strong>Resend</strong>: transactional emails (invitations, account-related messages)</li>
+            <li><strong>Firebase Cloud Messaging</strong> (Google): delivery of push notifications</li>
+            <li><strong>RevenueCat</strong>: manages Premium purchases and subscriptions. It receives your account ID and the purchase information from Apple or Google, never your payment details</li>
+            <li><strong>Apple App Store</strong> and <strong>Google Play</strong>: app distribution, payment for Premium, and crash reporting</li>
           </ul>
           <p className="mt-3">Each provider processes only the data necessary for its function and is bound by its own privacy terms.</p>
         </PolicyCard>
@@ -110,6 +122,7 @@ export default function PrivacyPage() {
             <li>Offline scoreboards (created without signing in) stay on your device only and are never sent to our servers</li>
             <li>You can change or remove your profile picture at any time</li>
             <li>If you delete your account, your profile and personal data are removed, but match results and ELO history shared with other scoreboard members may be retained so their statistics remain consistent</li>
+            <li>Purchase records are kept while you have an account, and for as long as needed to handle refunds and accounting. Apple and Google keep their own records of your purchases</li>
           </ul>
         </PolicyCard>
 
@@ -142,7 +155,8 @@ export default function PrivacyPage() {
             <li>Use the subject &quot;Delete my account&quot;</li>
             <li>Include your registered email address</li>
           </ul>
-          <p>Email-based deletion is processed within 72 hours and confirmed by reply.</p>
+          <p className="mb-3">Email-based deletion is processed within 72 hours and confirmed by reply.</p>
+          <p>Deleting your account does not cancel a Premium subscription. Cancel it first in the App Store or Google Play subscription settings. In the app you find a shortcut under your profile: Premium, Manage subscription.</p>
         </PolicyCard>
 
         <PolicyCard title="Contact">
